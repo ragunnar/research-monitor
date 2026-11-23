@@ -345,7 +345,9 @@
    ============================================================================ */
 
 /* ============================================================================
-   KEY NEWS (curated by hand; not a live feed). CAR-T and BiTE / T-cell engagers in
+   KEY NEWS (curated; not a live feed). This built-in list is the fallback: the
+   page then loads https://ragunnar.github.io/research-monitor/news.js, which is
+   updated twice a week and replaces this list whenever it can be reached. CAR-T and BiTE / T-cell engagers in
    autoimmune disease: breakthrough results, serious safety information, halted
    trials and regulatory milestones, from company / stock-exchange announcements,
    journals and media. Newest first is not required; the page sorts by date.
@@ -416,6 +418,7 @@ window.RM_CURATED = {
 };
 
 </script>
+<script src="https://ragunnar.github.io/research-monitor/news.js"></script>
 <script>
 "use strict";
 /* ---------- Storage shim + snapshot mode ----------
@@ -435,7 +438,9 @@ const THERAPIES = {
   cart: { label:"CAR-T", kw:"CAR-T cell",
           q:'("chimeric antigen receptor" OR "CAR T" OR "CAR-T" OR "CAR T-cell" OR "CAR-NK")' },
   bite: { label:"BiTE / T-cell engagers", kw:"bispecific T cell engager",
-          q:'("bispecific T cell engager" OR "T cell engager" OR "T-cell engager" OR BiTE OR blinatumomab OR teclistamab OR mosunetuzumab OR "bispecific antibody")' },
+          /* Narrow definition: CD3-engaging T-cell engagers only. The bare word BiTE is left out on purpose
+             (PubMed matches it to insect/animal "bites") and so is the generic "bispecific antibody". */
+          q:'("bispecific T cell engager" OR "bispecific T-cell engager" OR "T cell engager" OR "T-cell engager" OR "T cell engagers" OR "T-cell engagers" OR "T cell-engaging" OR blinatumomab OR teclistamab OR mosunetuzumab OR glofitamab OR epcoritamab OR elranatamab OR talquetamab)' },
   hsct: { label:"Autologous HSCT", kw:"autologous stem cell transplant",
           q:'(autologous AND ("hematopoietic stem cell transplant*" OR "haematopoietic stem cell transplant*" OR "stem cell transplant*" OR HSCT OR AHSCT))' }
 };
