@@ -143,6 +143,7 @@
   .b-rct{background:var(--good-soft); color:var(--good)}
   .b-case{background:var(--warn-soft); color:var(--warn)}
   .b-cohort{background:var(--pre-soft); color:var(--pre)}
+  .b-letter{background:var(--closed-soft); color:var(--closed)}
   .b-safety{background:var(--bad-soft); color:var(--bad)}
   .b-halt{background:var(--bad); color:#fff}
   .b-break{background:var(--good); color:#fff}
@@ -607,6 +608,10 @@ function paperKinds(types, title){
   else if(/\bsystematic review\b/i.test(t)) add("b-review","Systematic review",true);
   else if(/\bmeta-analysis\b/i.test(t)) add("b-review","Meta-analysis",true);
   else if(/\breview\b/i.test(t)) add("b-review","Review",true);
+  if(has(/^letter$/i) || has(/^comment$/i)) add("b-letter","Letter");
+  else if(/^(re:|reply\b|response to\b|correspondence\b|comment on\b|letter\b)|letter to the editor|\bin reply\b|: (a )?(reply|comment|correspondence)\b/i.test(t)) add("b-letter","Letter",true);
+  if(has(/^editorial$/i)) add("b-letter","Editorial");
+  if(has(/^preprint$/i)) add("b-pre","Preprint");
   return out;
 }
 function euRegId(idModule){
