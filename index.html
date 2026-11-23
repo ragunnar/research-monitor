@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research Monitor — Cell &amp; Immunotherapy in Autoimmune Disease</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#ffffff; --ink:#1a2230; --muted:#5b6676; --line:#e4e8ee;
+    --accent:#2563eb; --accent-soft:#eef3ff; --good:#0a7c3f; --good-soft:#e7f6ee;
+    --warn:#9a6700; --warn-soft:#fff5e0; --closed:#6b7280; --closed-soft:#eef0f2;
+    --review:#7c3aed; --review-soft:#f1eafe; --trial:#0369a1; --trial-soft:#e6f3fb;
+    --pre:#b4530a; --pre-soft:#fdeee0; --eu:#1a4fb4; --eu-soft:#e7edfb;
+    --shadow:0 1px 2px rgba(20,30,50,.06),0 4px 16px rgba(20,30,50,.05);
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0f141b; --panel:#161c25; --ink:#e7ecf3; --muted:#9aa6b6; --line:#28303c;
+      --accent:#5b8cff; --accent-soft:#1a2638; --good:#4ade80; --good-soft:#15291d;
+      --warn:#fbbf24; --warn-soft:#2a2310; --closed:#9aa6b6; --closed-soft:#1d242e;
+      --review:#c4a6ff; --review-soft:#241a36; --trial:#7cc4ec; --trial-soft:#0f2533;
+      --pre:#f0a868; --pre-soft:#2b1d10; --eu:#6f9bff; --eu-soft:#17233f;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 18px rgba(0,0,0,.25);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{ background:var(--bg); color:var(--ink); font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; padding:0 0 60px; }
+  .wrap{max-width:1080px; margin:0 auto; padding:0 18px}
+  header{padding:26px 0 14px; border-bottom:1px solid var(--line); margin-bottom:18px}
+  .titlerow{display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap}
+  h1{font-size:21px; margin:0 0 3px; letter-spacing:-.01em}
+  .sub{color:var(--muted); font-size:13.5px; margin:0}
+  .spacer{flex:1}
+  .updated{font-size:12px; color:var(--muted); text-align:right; white-space:nowrap}
+  button{font-family:inherit; cursor:pointer}
+  .btn{ border:1px solid var(--line); background:var(--panel); color:var(--ink); padding:8px 13px; border-radius:10px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:7px; transition:.15s; }
+  .btn:hover{border-color:var(--accent); color:var(--accent)}
+  .btn.primary{background:var(--accent); color:#fff; border-color:var(--accent)}
+  .btn.primary:hover{filter:brightness(1.06); color:#fff}
+  .btn:disabled{opacity:.55; cursor:default}
+  .selectors{display:flex; flex-direction:column; gap:11px; margin-bottom:16px}
+  .selrow{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+  .sellabel{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); min-width:66px}
+  .selhint{font-size:11.5px; color:var(--muted)}
+  .tabs{display:flex; gap:6px; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:5px; box-shadow:var(--shadow); flex-wrap:wrap}
+  .tab{border:none; background:transparent; color:var(--muted); padding:8px 14px; border-radius:8px; font-size:13.5px; font-weight:650; display:inline-flex; align-items:center}
+  .tab.active{background:var(--accent-soft); color:var(--accent)}
+  .tab:hover:not(.active){color:var(--ink)}
+  .tabcount{display:inline-block; min-width:18px; padding:0 5px; margin-left:7px; border-radius:10px; background:var(--good); color:#fff; font-size:10.5px; font-weight:800; line-height:18px; text-align:center; vertical-align:middle}
+  .chips{display:flex; gap:7px; flex-wrap:wrap}
+  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:6px 12px 6px 11px; border-radius:20px; font-size:12.5px; font-weight:650; box-shadow:var(--shadow); display:inline-flex; align-items:center; gap:5px}
+  .chip::before{content:""; width:12px; height:12px; border-radius:4px; border:1.5px solid var(--line); display:inline-block; flex:0 0 auto}
+  .chip.active{background:var(--accent); color:#fff; border-color:var(--accent)}
+  .chip.active::before{background:#fff; border-color:#fff}
+  .chip:hover:not(.active){border-color:var(--accent); color:var(--accent)}
+  .chip[data-d="all"]::before{display:none}
+  .chip.cat-rheum{color:var(--accent)}
+  .chip.cat-rheum::before{border-color:var(--accent)}
+  .chip.cat-rheum:hover:not(.active){border-color:var(--accent)}
+  .chip.cat-rheum.active{background:var(--accent); border-color:var(--accent); color:#fff}
+  .chip.cat-neuro{color:var(--good)}
+  .chip.cat-neuro::before{border-color:var(--good)}
+  .chip.cat-neuro:hover:not(.active){border-color:var(--good); color:var(--good)}
+  .chip.cat-neuro.active{background:var(--good); border-color:var(--good); color:#fff}
+  .chip.cat-neuro.active::before{background:#fff; border-color:#fff}
+
+  .toggles{display:flex; gap:16px; align-items:center; flex-wrap:wrap}
+  .toggle{display:inline-flex; align-items:center; gap:7px; font-size:13px; color:var(--muted); user-select:none; cursor:pointer}
+  .toggle input{accent-color:var(--accent); width:15px; height:15px; cursor:pointer}
+  .tabsub{color:var(--muted); font-size:13px; margin:2px 0 12px}
+  .tabsub b{color:var(--ink); font-weight:650}
+  .newbanner{background:var(--good-soft); color:var(--good); border:1px solid var(--good); border-radius:12px; padding:10px 14px; font-size:13px; margin-bottom:14px}
+  .newbanner b{font-weight:750}
+  .newnote{color:var(--muted); font-size:12.5px; margin-bottom:14px}
+  .chartwrap{background:var(--panel); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); padding:14px 16px; margin-bottom:18px}
+  .chart-head{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:6px}
+  .chart-head b{font-size:14px}
+  .chart-sub{color:var(--muted); font-size:12.5px}
+  .chart-modes{display:inline-flex; gap:3px; background:var(--bg); border:1px solid var(--line); border-radius:9px; padding:3px}
+  .chart-mode{border:none; background:transparent; color:var(--muted); font-size:12px; font-weight:650; padding:5px 10px; border-radius:6px}
+  .chart-mode.active{background:var(--panel); color:var(--accent); box-shadow:var(--shadow)}
+  .chart-toolbar{display:flex; align-items:center; gap:8px; margin:2px 0 4px; flex-wrap:wrap}
+  .chart-tlabel{font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em}
+  .chart-therapies{display:inline-flex; gap:3px; background:var(--bg); border:1px solid var(--line); border-radius:9px; padding:3px; flex-wrap:wrap}
+  .chart-th{border:none; background:transparent; color:var(--muted); font-size:12px; font-weight:650; padding:5px 11px; border-radius:6px}
+  .chart-th.active{background:var(--panel); color:var(--accent); box-shadow:var(--shadow)}
+  .chart-head .btn{margin-left:auto}
+  .chart-ph{font-size:12.5px; color:var(--muted); padding:14px 2px; line-height:1.55}
+  .chart-status{font-size:12.5px; color:var(--muted); padding:26px 2px; text-align:center}
+  .chart-svg{width:100%; height:auto; display:block; margin-top:4px}
+  .chart-grid{stroke:var(--line); stroke-width:1}
+  .chart-axis{stroke:var(--muted); stroke-width:1.2}
+  .chart-tick{fill:var(--muted); font-size:10px}
+  .chart-axtitle{fill:var(--muted); font-size:11px; font-weight:600}
+  .chart-line{fill:none; stroke-width:2}
+  .chart-line.wide{stroke-width:3.2}
+  .chart-dot{stroke:var(--panel); stroke-width:1}
+  .chart-mark{stroke:var(--panel); stroke-width:1}
+  .chart-legend{display:flex; gap:14px; flex-wrap:wrap; margin-top:10px}
+  .chart-leg{display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--ink); cursor:pointer; user-select:none}
+  .chart-leg.off{opacity:.4}
+  .chart-sw{width:12px; height:12px; border-radius:3px; flex:0 0 auto}
+  .chart-leg .lv{color:var(--muted); font-weight:700}
+  .chart-cap{font-size:11px; color:var(--muted); margin-top:9px; line-height:1.55}
+  .counts{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px}
+  .count{ background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:11px 15px; box-shadow:var(--shadow); min-width:120px; flex:1; }
+  .count.clickable{cursor:pointer; transition:.15s}
+  .count.clickable:hover{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent) inset, var(--shadow)}
+  .count .n{font-size:20px; font-weight:750; letter-spacing:-.02em}
+  .count .l{font-size:11.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-top:1px}
+  .count .expand{font-size:10.5px; font-weight:700; color:var(--accent); margin-top:5px; opacity:.9}
+  .cols{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+  @media (max-width:860px){ .cols{grid-template-columns:1fr} }
+  .col h2{font-size:14px; margin:0 0 10px; display:flex; align-items:center; gap:8px}
+  .col h2 .src{font-size:11px; font-weight:600; color:var(--muted); border:1px solid var(--line); padding:1px 7px; border-radius:20px}
+  .mini{font-size:12px; font-weight:600; color:var(--accent); background:none; border:none; padding:2px 4px; margin-left:auto}
+  .mini:hover{text-decoration:underline}
+  .eu-note{margin-top:8px; font-size:12.5px; color:var(--muted)}
+  .eu-note a{color:var(--accent); text-decoration:none} .eu-note a:hover{text-decoration:underline}
+  .eu-tag{font-weight:700; color:var(--ink)}
+  .eu-fine{font-size:11.5px; color:var(--muted); margin-top:6px; line-height:1.55}
+  .eu-fine .badge{vertical-align:middle}
+  .eu-live{color:var(--good); font-weight:650}
+  .card{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:14px 15px; box-shadow:var(--shadow); margin-bottom:11px; }
+  .card.isnew{border-color:var(--good); box-shadow:0 0 0 1px var(--good) inset, var(--shadow)}
+  .card.iseu{border-left:3px solid var(--eu)}
+  .card .t{font-size:14px; font-weight:650; line-height:1.4; margin:0 0 7px}
+  .card .t a{color:var(--ink); text-decoration:none}
+  .card .t a:hover{color:var(--accent); text-decoration:underline}
+  .meta{font-size:12.5px; color:var(--muted); display:flex; flex-wrap:wrap; gap:4px 10px; align-items:center}
+  .meta b{color:var(--ink); font-weight:600}
+  .badges{display:flex; gap:6px; flex-wrap:wrap; margin:8px 0 0}
+  .badge{font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; letter-spacing:.02em}
+  a.badge{text-decoration:none; cursor:pointer}
+  a.badge:hover{filter:brightness(1.08)}
+  .b-review{background:var(--review-soft); color:var(--review)}
+  .b-trial{background:var(--trial-soft); color:var(--trial)}
+  .b-pre{background:var(--pre-soft); color:var(--pre)}
+  .b-recruit{background:var(--good-soft); color:var(--good)}
+  .b-active{background:var(--accent-soft); color:var(--accent)}
+  .b-closed{background:var(--closed-soft); color:var(--closed)}
+  .b-phase{background:var(--warn-soft); color:var(--warn)}
+  .b-new{background:var(--good); color:#fff}
+  .b-eu{background:var(--eu); color:#fff}
+  .abs{margin:9px 0 0; font-size:13px; color:var(--muted); line-height:1.55; border-top:1px dashed var(--line); padding-top:9px; display:none; white-space:pre-wrap}
+  .abs.show{display:block}
+  .abstoggle{font-size:12px; font-weight:600; color:var(--accent); background:none; border:none; padding:6px 0 0; cursor:pointer}
+  .abstoggle:hover{text-decoration:underline}
+  .skel{height:74px; border-radius:var(--radius); background:linear-gradient(90deg,var(--line) 25%,var(--panel) 37%,var(--line) 63%); background-size:400% 100%; animation:sh 1.3s infinite; margin-bottom:11px; opacity:.6}
+  @keyframes sh{0%{background-position:100% 0}100%{background-position:-100% 0}}
+  .empty,.err{font-size:13px; color:var(--muted); background:var(--panel); border:1px dashed var(--line); border-radius:12px; padding:16px}
+  .err{border-color:#e0b4b4; color:var(--warn)} .err a{color:var(--accent)}
+  .infobtn{display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; border:1.5px solid var(--accent); color:var(--accent); background:transparent; font:800 italic 12px/1 Georgia,serif; vertical-align:middle; margin-left:8px; cursor:pointer; padding:0}
+  .infobtn:hover{background:var(--accent); color:#fff}
+  .gloss h4{margin:14px 0 4px; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted)}
+  .gloss h4:first-child{margin-top:2px}
+  .gloss dl{margin:0}
+  .gloss dt{font-weight:750; color:var(--ink); margin-top:9px}
+  .gloss dt .full{font-weight:500; color:var(--muted)}
+  .gloss dd{margin:2px 0 0; color:var(--muted); font-size:13px; line-height:1.5}
+  footer{margin-top:30px; padding-top:16px; border-top:1px solid var(--line); font-size:12px; color:var(--muted); line-height:1.6}
+  footer a{color:var(--accent); text-decoration:none}
+  .modal-overlay{position:fixed; inset:0; background:rgba(15,20,27,.55); display:flex; align-items:center; justify-content:center; padding:20px; z-index:50}
+  .modal-overlay[hidden]{display:none}
+  .modal-panel{background:var(--bg); border:1px solid var(--line); border-radius:16px; width:100%; max-width:780px; max-height:86vh; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  .modal-head{display:flex; align-items:flex-start; gap:12px; padding:15px 18px; border-bottom:1px solid var(--line)}
+  .modal-head h3{margin:0; font-size:16px; letter-spacing:-.01em}
+  .modal-sub{font-size:12px; color:var(--muted); margin-top:2px}
+  .modal-sub a{color:var(--accent); text-decoration:none} .modal-sub a:hover{text-decoration:underline}
+  .modal-actions{margin-left:auto; display:flex; gap:10px; align-items:center; flex:0 0 auto}
+  .modal-ext{font-size:12.5px; font-weight:600; color:var(--accent); text-decoration:none; white-space:nowrap}
+  .modal-ext:hover{text-decoration:underline}
+  .modal-body{padding:14px 18px; overflow:auto}
+  .modal-body .card{margin-bottom:10px}
+  .modal-foot{display:flex; align-items:center; gap:12px; padding:12px 18px; border-top:1px solid var(--line)}
+  .modal-info{font-size:12.5px; color:var(--muted)}
+  .modal-foot .btn{margin-left:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="titlerow">
+      <div>
+        <h1>Research Monitor <button class="infobtn" id="glossaryBtn" title="Abbreviations &amp; diagnoses" aria-label="Abbreviations">i</button></h1>
+        <p class="sub">Cell &amp; immunotherapy in autoimmune disease — live from PubMed, ClinicalTrials.gov, Europe PMC &amp; (with helper) EU CTIS</p>
+      </div>
+      <div class="spacer"></div>
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px">
+        <button class="btn primary" id="refreshAll">↻ Refresh</button>
+        <div class="updated" id="updated">—</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="selectors">
+    <div class="selrow">
+      <span class="sellabel">Therapy</span>
+      <div class="tabs" id="therapyTabs">
+        <button class="tab" data-t="all">All three</button>
+        <button class="tab" data-t="cart">CAR-T</button>
+        <button class="tab" data-t="bite">BiTE / T-cell engagers</button>
+        <button class="tab" data-t="hsct">Autologous HSCT</button>
+      </div>
+    </div>
+    <div class="selrow">
+      <span class="sellabel">Diagnosis</span>
+      <div class="chips" id="dxChips">
+        <button class="chip" data-d="all">All autoimmune</button>
+        <button class="chip cat-rheum" data-d="sle">SLE</button>
+        <button class="chip cat-rheum" data-d="ra">RA</button>
+        <button class="chip cat-rheum" data-d="aav">AAV</button>
+        <button class="chip cat-rheum" data-d="sjogren">Sjögren's</button>
+        <button class="chip cat-rheum" data-d="myositis">Myositis</button>
+        <button class="chip cat-rheum" data-d="antisyn">Antisynthetase</button>
+        <button class="chip cat-rheum" data-d="mda5">Anti-MDA5</button>
+        <button class="chip cat-rheum" data-d="ssc">Systemic sclerosis</button>
+        <button class="chip cat-rheum" data-d="mctd">MCTD</button>
+        <button class="chip cat-neuro" data-d="ms">MS</button>
+        <button class="chip cat-neuro" data-d="cidp">CIDP</button>
+      </div>
+      <span class="selhint">pick one or more &nbsp;·&nbsp; <span style="color:var(--accent)">●</span> rheumatologic &nbsp;·&nbsp; <span style="color:var(--good)">●</span> neurologic</span>
+    </div>
+    <div class="selrow">
+      <span class="sellabel">Options</span>
+      <div class="toggles">
+        <label class="toggle"><input type="checkbox" id="optAbs"> Show abstracts</label>
+        <label class="toggle"><input type="checkbox" id="optClosed"> Include completed / closed trials</label>
+      </div>
+    </div>
+  </div>
+
+  <p class="tabsub" id="tabsub"></p>
+  <div id="newbar"></div>
+
+  <div class="chartwrap" id="chartWrap">
+    <div class="chart-head">
+      <div><b>Cumulative reports by quarter</b><span class="chart-sub" id="chartSub"></span></div>
+      <div class="chart-modes" id="chartModes">
+        <button class="chart-mode active" data-m="reports">Publications + posters</button>
+        <button class="chart-mode" data-m="patients">Patients treated</button>
+      </div>
+      <button class="btn" id="chartBtn">Build chart</button>
+    </div>
+    <div class="chart-toolbar">
+      <span class="chart-tlabel">Show</span>
+      <div class="chart-therapies" id="chartTherapies">
+        <button class="chart-th active" data-ct="all">All 3</button>
+        <button class="chart-th" data-ct="cb">CAR-T + BiTE</button>
+        <button class="chart-th" data-ct="cart">CAR-T</button>
+        <button class="chart-th" data-ct="bite">BiTE</button>
+        <button class="chart-th" data-ct="hsct">Auto-HSCT</button>
+      </div>
+    </div>
+    <div id="chartArea"><div class="chart-ph">PubMed publications (unique records), cumulative per calendar quarter — one line per therapy for the selected diagnosis, plus a de-duplicated total. Pick a therapy set above, then click <b>Build chart</b>. Add congress posters &amp; patient counts in <b>research-monitor-data.js</b> to overlay them (◆).</div></div>
+  </div>
+
+  <div class="counts" id="counts"></div>
+
+  <div class="cols">
+    <div class="col">
+      <h2>Recent papers <span class="src">PubMed</span><button class="mini" data-open="pubmed">Open search ↗</button></h2>
+      <div id="papers"></div>
+    </div>
+    <div class="col">
+      <h2>Clinical trials <span class="src" id="trialsSrc">ClinicalTrials.gov</span><button class="mini" data-open="ctgov">Open search ↗</button></h2>
+      <div id="trials"></div>
+      <div class="eu-note" id="euLinks"></div>
+    </div>
+  </div>
+
+  <div class="col" style="margin-top:18px">
+    <h2>Preprints <span class="src">Europe PMC · not peer-reviewed</span><button class="mini" data-open="preprint">medRxiv / bioRxiv search ↗</button></h2>
+    <div id="preprints"></div>
+  </div>
+
+  <footer>
+    Data: <a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener">PubMed</a> (NLM) ·
+    <a href="https://clinicaltrials.gov/" target="_blank" rel="noopener">ClinicalTrials.gov</a> (NIH/NLM, US) ·
+    <a href="https://europepmc.org/" target="_blank" rel="noopener">Europe PMC</a> ·
+    EU <a href="https://euclinicaltrials.eu/ctis-public/search" target="_blank" rel="noopener">CTIS</a> / <a href="https://www.clinicaltrialsregister.eu/" target="_blank" rel="noopener">EUCTR</a> (EMA).
+    <span style="display:block;margin-top:8px;padding-top:10px;border-top:1px solid var(--line)"><b>Disclaimer.</b> Patient counts for CAR-T and BiTE are drawn from a de-duplicated registry compiled by Ragnar Gunnarsson, MD/PhD (status 1 July 2026): figures are the registry’s n (counted), i.e. overlapping cohorts/publications have been removed so patients are not double-counted. Autologous HSCT figures are from the EBMT ADWP (Farge et al., Haematologica 2010). All counts are aggregate and non–patient-identifiable, provided for research and educational purposes only; they are a snapshot that may be incomplete and must be verified against primary sources before any clinical or decision-making use. Publication, trial and preprint data are retrieved live from their providers (U.S. National Library of Medicine / NIH, EMBL-EBI Europe PMC, EMA) and remain © those providers. The chart reflects reported activity (publications + curated counts), not a patient census.</span>
+  </footer>
+</div>
+
+<div id="modal" class="modal-overlay" hidden>
+  <div class="modal-panel">
+    <div class="modal-head">
+      <div><h3 id="modal-title"></h3><div class="modal-sub" id="modal-sub"></div></div>
+      <div class="modal-actions">
+        <a class="modal-ext" id="modal-ext" target="_blank" rel="noopener">Open full search ↗</a>
+        <button class="btn" id="modal-close">Close ✕</button>
+      </div>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot" id="modal-foot"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================================
+   Research Monitor — CURATED DATA OVERLAY
+   metric:"reports"=congress posters not in PubMed; metric:"patients"=patients
+   treated. Curated points show as diamonds; hover for source. Edit entries[],
+   save, reload (F5).
+   FIELDS: therapy("cart"|"bite"|"hsct") · diagnosis("sle"|"ra"|"aav"|"sjogren"|
+   "myositis"|"antisyn"|"mda5"|"ssc"|"mctd"|"ms"|"all") · year · quarter(optional,
+   1-4; without it the row is placed in Q4 of that year, or the current quarter
+   for the current year) · count(added in that period; chart accumulates) ·
+   metric · label · pmid(optional).
+   PATIENT DATA (CAR-T & BiTE): user's deduplicated registry
+   "CAR-T_and_BiTE_autoimmune_registry_2026" (1 July 2026), n(counted). AAV,
+   antisynthetase (ASyS) and anti-MDA5 are split out as their own diagnoses.
+   diagnosis:"all" = other CTD/overlap + autoimmune cytopenias only. HSCT rows
+   are from EBMT (Farge, Haematologica 2010), not this registry.
+   ============================================================================ */
+
+window.RM_CURATED = {
+  entries: [
+
+    /* ---- CAR-T (incl. CAR-NK/allo/in vivo) · patients — Registry v2026-07-01 (dedup) ---- */
+    { therapy:"cart", diagnosis:"sle", year:2024, count:12, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"sle", year:2025, count:126, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"sle", year:2026, quarter:2, count:66, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"ra", year:2024, count:2, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"ra", year:2025, count:4, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"ra", year:2026, quarter:2, count:7, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"aav", year:2025, count:2, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"aav", year:2026, quarter:2, count:1, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"sjogren", year:2024, count:1, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"myositis", year:2024, count:3, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"myositis", year:2025, count:26, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"myositis", year:2026, quarter:2, count:21, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"mda5", year:2025, count:1, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"ssc", year:2024, count:2, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"ssc", year:2025, count:39, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"ssc", year:2026, quarter:2, count:35, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"cart", diagnosis:"all", year:2025, count:1, metric:"patients", label:"Other autoimmune (other CTD/overlap + cytopenias) — Registry v2026-07-01 (dedup)" },
+    { therapy:"cart", diagnosis:"all", year:2026, quarter:2, count:2, metric:"patients", label:"Other autoimmune (other CTD/overlap + cytopenias) — Registry v2026-07-01 (dedup)" },
+
+    /* ---- BiTE / T-cell engagers · patients — Registry v2026-07-01 (dedup) ---- */
+    { therapy:"bite", diagnosis:"sle", year:2024, count:1, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"bite", diagnosis:"sle", year:2026, quarter:2, count:32, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"bite", diagnosis:"ra", year:2025, count:14, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"bite", diagnosis:"ra", year:2026, quarter:2, count:12, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"bite", diagnosis:"sjogren", year:2025, count:2, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"bite", diagnosis:"myositis", year:2025, count:2, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"bite", diagnosis:"antisyn", year:2026, quarter:2, count:5, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"bite", diagnosis:"ssc", year:2024, count:1, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"bite", diagnosis:"ssc", year:2025, count:3, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"bite", diagnosis:"ssc", year:2026, quarter:2, count:12, metric:"patients", label:"Registry v2026-07-01 (deduplicated n)" },
+    { therapy:"bite", diagnosis:"all", year:2025, count:4, metric:"patients", label:"Other autoimmune (other CTD/overlap + cytopenias) — Registry v2026-07-01 (dedup)" },
+    { therapy:"bite", diagnosis:"all", year:2026, quarter:2, count:4, metric:"patients", label:"Other autoimmune (other CTD/overlap + cytopenias) — Registry v2026-07-01 (dedup)" },
+
+    /* ---- Autologous HSCT · patients — EBMT ADWP 1996-2007 (Farge, Haematologica 2010) ---- */
+    { therapy:"hsct", diagnosis:"ms",  year:2007, count:345, metric:"patients", label:"EBMT ADWP 1996-2007 cumulative — Farge, Haematologica 2010" },
+    { therapy:"hsct", diagnosis:"ssc", year:2007, count:175, metric:"patients", label:"EBMT ADWP 1996-2007 cumulative — Farge, Haematologica 2010" },
+    { therapy:"hsct", diagnosis:"sle", year:2007, count:85,  metric:"patients", label:"EBMT ADWP 1996-2007 cumulative — Farge, Haematologica 2010" },
+
+    /* ---- Congress posters (metric:"reports") — add from ACR/EULAR/ASH/EHA/AAN/ECTRIMS ---- */
+
+  ]
+};
+
+</script>
+<script>
+"use strict";
+/* ---------- Storage shim + snapshot mode ----------
+   LS/SS: localStorage/sessionStorage with an in-memory fallback (some hosts block storage).
+   SNAP: when a snapshot build defines window.RM_SNAPSHOT, every data request is answered
+   from that baked-in data instead of the network (see make-snapshot.py). */
+function safeStore(name){
+  try{ const st=window[name], k="__rm_probe"; st.setItem(k,"1"); st.removeItem(k); return st; }
+  catch(e){ const m={}; return { getItem:k=>(k in m ? m[k] : null), setItem:(k,v)=>{ m[k]=String(v); }, removeItem:k=>{ delete m[k]; } }; }
+}
+const LS = safeStore("localStorage"), SS = safeStore("sessionStorage");
+const SNAP = window.RM_SNAPSHOT || null;
+const SNAP_MISSING = "Not included in this snapshot (it stores each single diagnosis and \u201cAll autoimmune\u201d, not combinations).";
+/* ---------- Building blocks ---------- */
+const THERAPIES = {
+  all:  { label:"All three therapies", kw:"CAR-T OR bispecific OR stem cell transplant", q:null },
+  cart: { label:"CAR-T", kw:"CAR-T cell",
+          q:'("chimeric antigen receptor" OR "CAR T" OR "CAR-T" OR "CAR T-cell" OR "CAR-NK")' },
+  bite: { label:"BiTE / T-cell engagers", kw:"bispecific T cell engager",
+          q:'("bispecific T cell engager" OR "T cell engager" OR "T-cell engager" OR BiTE OR blinatumomab OR teclistamab OR mosunetuzumab OR "bispecific antibody")' },
+  hsct: { label:"Autologous HSCT", kw:"autologous stem cell transplant",
+          q:'(autologous AND ("hematopoietic stem cell transplant*" OR "haematopoietic stem cell transplant*" OR "stem cell transplant*" OR HSCT OR AHSCT))' }
+};
+const DIAGNOSES = {
+  all:      { label:"All autoimmune", short:"autoimmune disease (incl. neurological & rheumatic)",
+              q:'(autoimmune OR autoimmunity OR "systemic lupus erythematosus" OR lupus OR "rheumatoid arthritis" OR "Sjogren" OR "Sjögren" OR myositis OR "idiopathic inflammatory myopathy" OR dermatomyositis OR polymyositis OR "antisynthetase syndrome" OR "anti-MDA5" OR "systemic sclerosis" OR scleroderma OR "mixed connective tissue disease" OR vasculitis OR "ANCA-associated vasculitis" OR "multiple sclerosis" OR "myasthenia gravis" OR "neuromyelitis optica" OR "stiff person syndrome" OR "autoimmune encephalitis" OR "chronic inflammatory demyelinating polyneuropathy" OR CIDP OR "rheumatic disease")' },
+  sle:      { label:"SLE", short:"systemic lupus erythematosus (SLE)",
+              q:'("systemic lupus erythematosus" OR "lupus erythematosus" OR SLE OR "lupus nephritis")' },
+  ra:       { label:"RA", short:"rheumatoid arthritis (RA)",
+              q:'("rheumatoid arthritis" OR "RA-ILD" OR "seropositive rheumatoid arthritis")' },
+  aav:      { label:"AAV", short:"ANCA-associated vasculitis (AAV)",
+              q:'("ANCA-associated vasculitis" OR "ANCA vasculitis" OR "granulomatosis with polyangiitis" OR "microscopic polyangiitis" OR "eosinophilic granulomatosis with polyangiitis" OR "Wegener" OR "MPO-ANCA" OR "PR3-ANCA")' },
+  sjogren:  { label:"Sjögren's", short:"Sjögren's disease",
+              q:'("Sjogren" OR "Sjögren" OR "Sjogrens" OR "sicca syndrome")' },
+  myositis: { label:"Myositis", short:"idiopathic inflammatory myopathy (myositis)",
+              q:'(myositis OR "idiopathic inflammatory myopathy" OR dermatomyositis OR polymyositis OR "necrotizing myopathy")' },
+  antisyn:  { label:"Antisynthetase", short:"antisynthetase syndrome (ASyS)",
+              q:'("antisynthetase syndrome" OR "anti-synthetase syndrome" OR "anti-Jo-1" OR "Jo-1 antibody" OR "antisynthetase")' },
+  mda5:     { label:"Anti-MDA5", short:"anti-MDA5 dermatomyositis",
+              q:'("anti-MDA5" OR "MDA5" OR "anti-MDA-5" OR "MDA-5 dermatomyositis" OR "melanoma differentiation-associated gene 5")' },
+  ssc:      { label:"Systemic sclerosis", short:"systemic sclerosis",
+              q:'("systemic sclerosis" OR scleroderma OR "diffuse cutaneous systemic sclerosis")' },
+  mctd:     { label:"MCTD", short:"mixed connective tissue disease (MCTD)",
+              q:'("mixed connective tissue disease" OR MCTD OR "Sharp syndrome")' },
+  ms:       { label:"MS", short:"multiple sclerosis (MS)",
+              q:'("multiple sclerosis" OR "relapsing remitting multiple sclerosis" OR "progressive multiple sclerosis")' },
+  cidp:     { label:"CIDP", short:"chronic inflammatory demyelinating polyneuropathy (CIDP)",
+              q:'("chronic inflammatory demyelinating polyneuropathy" OR CIDP OR "chronic inflammatory demyelinating polyradiculoneuropathy")' }
+};
+const ACTIVE_STATUSES = new Set(["RECRUITING","NOT_YET_RECRUITING","ACTIVE_NOT_RECRUITING","ENROLLING_BY_INVITATION","AVAILABLE"]);
+const EUT = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
+const CT  = "https://clinicaltrials.gov/api/v2/studies";
+const EPMC = "https://www.ebi.ac.uk/europepmc/webservices/rest/search";
+const THERAPY_ORDER = ["all","cart","bite","hsct"];
+const EU_RE = /^\d{4}-\d{6}-\d{2}(-\d{2})?$/;
+const CTIS_THERAPY = {
+  cart:{ phrase:"chimeric antigen receptor", re:/chimeric antigen receptor|CAR[\s-]?T|CAR[\s-]?NK/i },
+  bite:{ phrase:"bispecific", re:/bispecific|T[\s-]?cell engager|\bBiTE\b|blinatumomab|teclistamab|mosunetuzumab/i },
+  hsct:{ phrase:"autologous", re:/stem cell|h[a]?ematopoiet|HSCT|transplant/i }
+};
+const DX_RE = {
+  sle:/lupus|\bSLE\b/i, ra:/rheumatoid/i, aav:/anca|polyangiitis|wegener|granulomatosis|vasculit/i,
+  sjogren:/sj[öo]gren|sicca/i,
+  myositis:/myositis|myopath|dermatomyositis|polymyositis/i,
+  antisyn:/antisynthetase|anti-synthetase|anti[- ]?jo|jo-1|asys/i, mda5:/mda-?5/i,
+  ssc:/systemic sclerosis|scleroderma/i, mctd:/mixed connective|\bMCTD\b|sharp syndrome/i,
+  ms:/multiple sclerosis/i, cidp:/cidp|demyelinating polyneuropath|polyradiculoneuropath/i
+};
+const AUTOIMMUNE_RE = /lupus|\bSLE\b|rheumatoid|sj[öo]gren|sicca|myositis|myopath|dermatomyositis|polymyositis|antisynthetase|mda-?5|systemic sclerosis|scleroderma|mixed connective|\bMCTD\b|multiple sclerosis|autoimmun|vasculit|anca|myasthenia|neuromyelitis|stiff.person|encephalitis|rheumatic/i;
+const CTIS_STATUS = {1:"Under evaluation",2:"Authorised",3:"Ongoing",4:"Suspended",5:"Ended",6:"Ended",7:"Revoked",8:"Withdrawn",9:"Not authorised"};
+const CTIS_ACTIVE = new Set([1,2,3]);
+const CHART_SERIES = [
+  {key:"cart", label:"CAR-T", color:"var(--accent)"},
+  {key:"bite", label:"BiTE / TCE", color:"var(--review)"},
+  {key:"hsct", label:"Auto-HSCT", color:"var(--pre)"},
+  {key:"total", label:"Total (dedup)", color:"var(--ink)", wide:true}
+];
+
+/* ---------- Diagnosis-set helpers ---------- */
+function isAllDx(dxs){ return !dxs.length || dxs.includes("all"); }
+function dxKey(dxs){ return isAllDx(dxs) ? "all" : dxs.slice().sort().join("+"); }
+function diagnosisClause(dxs){
+  if(isAllDx(dxs)) return DIAGNOSES.all.q;
+  return "(" + dxs.slice().sort().map(k=>DIAGNOSES[k].q).join(" OR ") + ")";
+}
+function dxSubtitle(dxs){
+  if(isAllDx(dxs)) return "autoimmune disease";
+  const keys = dxs.slice().sort();
+  if(keys.length===1) return DIAGNOSES[keys[0]].short;
+  const names = keys.map(k=>DIAGNOSES[k].label);
+  return names.slice(0,-1).join(", ") + " or " + names[names.length-1];
+}
+function dxKeywords(dxs){
+  if(isAllDx(dxs)) return "autoimmune";
+  return dxs.slice().sort().map(k=>DIAGNOSES[k].label).join(" ");
+}
+
+/* ---------- Query builder ---------- */
+function therapyClause(tk){
+  if(tk==="all") return "(" + ["cart","bite","hsct"].map(k=>THERAPIES[k].q).join(" OR ") + ")";
+  return THERAPIES[tk].q;
+}
+function buildQueries(tk, dxs){
+  const q = `(${therapyClause(tk)}) AND (${diagnosisClause(dxs)})`;
+  return { pubmed:q, europepmc:q, ctgov:q.replace(/\*/g,"") };
+}
+function euctrLink(term){ return `https://www.clinicaltrialsregister.eu/ctr-search/search?query=${encodeURIComponent(term)}`; }
+function ctisSearchLink(){ return "https://euclinicaltrials.eu/ctis-public/search"; }
+function ctisViewLink(ct){ return "https://euclinicaltrials.eu/search-for-clinical-trials/?lang=en&EUCT="+encodeURIComponent(ct); }
+function euEntryLink(euId){ return /^\d{4}-\d{6}-\d{2}-\d{2}$/.test(euId) ? ctisViewLink(euId) : euctrLink(euId); }
+
+/* ---------- State ---------- */
+const state = {
+  therapy: LS.getItem("rm_therapy") || "all",
+  dxs: (function(){
+    const multi = LS.getItem("rm_dxs");
+    let a = multi ? multi.split(",").filter(Boolean) : (LS.getItem("rm_dx") ? [LS.getItem("rm_dx")] : ["all"]);
+    a = a.filter(k=>DIAGNOSES[k]);
+    return a.length ? a : ["all"];
+  })(),
+  showAbs: LS.getItem("rm_abs") === "1",
+  inclClosed: LS.getItem("rm_closed") === "1",
+  cache: {}, abstracts: {}, loadToken: 0, baseline:{}, seen:{}, proxy:false, euStats:null,
+  chart: { loading:false, dxKey:null, pub:null, mode:"reports", therapy:"all", hidden:{} }
+};
+const viewKey = () => state.therapy + "|" + dxKey(state.dxs);
+
+/* ---------- "New since last visit" tracking ---------- */
+const SEEN_KEY = "rm_seen_v1";
+const BASE_KEY = "rm_baseline_session";
+function loadSeen(){ try{ return JSON.parse(LS.getItem(SEEN_KEY)||"{}") || {}; }catch(e){ return {}; } }
+(function initBaseline(){
+  let base;
+  try{
+    const cached = SS.getItem(BASE_KEY);
+    if(cached){ base = JSON.parse(cached); }
+    else { base = loadSeen(); SS.setItem(BASE_KEY, JSON.stringify(base)); }
+  }catch(e){ base = loadSeen(); }
+  state.baseline = base || {};
+  state.seen = loadSeen();
+})();
+
+/* ---------- Helpers ---------- */
+const $ = sel => document.querySelector(sel);
+const el = (tag, cls, html) => { const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; };
+const esc = s => (s==null?"":String(s)).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+async function getJSON(url){
+  if(SNAP){ if(SNAP.json && Object.prototype.hasOwnProperty.call(SNAP.json,url)) return SNAP.json[url]; throw new Error("not in snapshot"); }
+  const r = await fetch(url, {headers:{Accept:"application/json"}}); if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); }
+function fmtCount(n){ return (n==null)?"—":Number(n).toLocaleString(); }
+function fmtDate(iso){ try{ return new Date(iso).toLocaleDateString([], {dateStyle:"medium"}); }catch(e){ return ""; } }
+function statusLabel(s){ return (s||"").replace(/_/g," ").toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()); }
+function phaseLabel(p){ if(!p||!p.length) return null; return p.map(x=>x.replace("PHASE","Phase ").replace("NA","N/A").trim()).join("/"); }
+function eu3(id){ const m=String(id||"").match(/(\d{4}-\d{6}-\d{2})/); return m?m[1]:null; }
+function normTitle(t){ return String(t||"").toLowerCase().replace(/[^a-z0-9]+/g,"").slice(0,80); }
+function parseEuDate(s){ const m=String(s||"").match(/^(\d{2})\/(\d{2})\/(\d{4})$/); return m?Date.parse(m[3]+"-"+m[2]+"-"+m[1])||0:0; }
+
+/* ---------- Mappers ---------- */
+function mapPaper(a, id){
+  const doi = (a.articleids||[]).find(x=>x.idtype==="doi");
+  const types = a.pubtype || [];
+  return { pmid:id, title:a.title || "(no title)", journal:a.fulljournalname || a.source || "", date:a.pubdate || "",
+    authors:(a.authors||[]).slice(0,3).map(x=>x.name).join(", ") + ((a.authors||[]).length>3?", et al.":""),
+    doi:doi?doi.value:null, isReview:types.some(x=>/review/i.test(x)), isTrial:types.some(x=>/trial/i.test(x)) };
+}
+function euRegId(idModule){
+  const cands=[];
+  (idModule.secondaryIdInfos||[]).forEach(si=>{ if(si&&si.id) cands.push({v:String(si.id).trim(), t:si.type}); });
+  if(idModule.orgStudyIdInfo && idModule.orgStudyIdInfo.id) cands.push({v:String(idModule.orgStudyIdInfo.id).trim(), t:idModule.orgStudyIdInfo.type});
+  for(const c of cands){ if(c.t==="EUDRACT_NUMBER" || EU_RE.test(c.v)) return c.v; }
+  return null;
+}
+function mapStudy(s){
+  const p = s.protocolSection || {};
+  const id = p.identificationModule || {}, st = p.statusModule || {}, sp = p.sponsorCollaboratorsModule || {}, dz = p.designModule || {};
+  const loc = (p.contactsLocationsModule||{}).locations || [];
+  const status = st.overallStatus || "";
+  return { source:"ct", nct:id.nctId, title:id.briefTitle || id.officialTitle || "(untitled study)",
+    status, active:ACTIVE_STATUSES.has(status), phase:phaseLabel(dz.phases),
+    sponsor:(sp.leadSponsor||{}).name || "", enroll:(dz.enrollmentInfo||{}).count,
+    updated:(st.lastUpdatePostDateStruct||{}).date || "", ts:Date.parse((st.lastUpdatePostDateStruct||{}).date||"")||0,
+    sites:loc.length, countries:[...new Set(loc.map(l=>l.country).filter(Boolean))], euId: euRegId(id) };
+}
+function mapPreprint(r){
+  return { id:r.id, source:r.source, title:r.title || "(no title)", authors:r.authorString || "",
+    server:r.bookOrReportDetails?.publisher || r.journalTitle || r.pubType || "Preprint",
+    date:r.firstPublicationDate || r.pubYear || "", doi:r.doi || null };
+}
+function normalizeCtis(t){
+  const enrollNum = t.totalNumberEnrolled ? (parseInt(String(t.totalNumberEnrolled).replace(/\D/g,""),10) || null) : null;
+  return { source:"eu", nct:null, euId:t.ctNumber, title:t.ctTitle || t.shortTitle || "(untitled EU trial)",
+    status: CTIS_STATUS[t.ctStatus] || "EU trial", active: CTIS_ACTIVE.has(t.ctStatus), phase: t.trialPhase || null,
+    sponsor: t.sponsor || "", enroll: enrollNum, updated: t.lastUpdated || "", ts: parseEuDate(t.lastUpdated),
+    sites: 0, countries: (t.trialCountries||[]).map(c=>String(c).split(":")[0]).filter(Boolean) };
+}
+
+/* ---------- Loaders ---------- */
+async function pmSummaries(ids){
+  if(!ids.length) return [];
+  const sum = await getJSON(`${EUT}esummary.fcgi?db=pubmed&retmode=json&id=${ids.join(",")}`);
+  const res = sum.result || {};
+  return (res.uids||[]).map(id=>mapPaper(res[id]||{}, id));
+}
+async function loadPubMed(q){
+  const es = await getJSON(`${EUT}esearch.fcgi?db=pubmed&retmode=json&sort=date&retmax=15&term=${encodeURIComponent(q)}`);
+  const total = Number(es.esearchresult?.count || 0);
+  const items = await pmSummaries(es.esearchresult?.idlist || []);
+  return {total, items};
+}
+async function esearchIds(q){
+  const es = await getJSON(`${EUT}esearch.fcgi?db=pubmed&retmode=json&sort=date&retmax=15&term=${encodeURIComponent(q)}`);
+  return es.esearchresult?.idlist || [];
+}
+async function loadAbstracts(pmids){
+  const need = pmids.filter(p=>!(p in state.abstracts));
+  if(!need.length) return;
+  if(SNAP){ need.forEach(p=>{ state.abstracts[p] = (SNAP.abstracts && SNAP.abstracts[p]) || "Abstract not included in this snapshot \u2014 open the PubMed record."; }); return; }
+  try{
+    const r = await fetch(`${EUT}efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&id=${need.join(",")}`);
+    const xml = new DOMParser().parseFromString(await r.text(), "text/xml");
+    xml.querySelectorAll("PubmedArticle").forEach(art=>{
+      const pmid = art.querySelector("MedlineCitation > PMID")?.textContent?.trim();
+      const parts = [...art.querySelectorAll("Abstract > AbstractText")].map(n=>{ const lab = n.getAttribute("Label"); return (lab?lab+": ":"") + n.textContent; });
+      if(pmid) state.abstracts[pmid] = parts.join("\n\n") || "No abstract available.";
+    });
+    need.forEach(p=>{ if(!(p in state.abstracts)) state.abstracts[p]="No abstract available."; });
+  }catch(e){ need.forEach(p=>state.abstracts[p]="Abstract could not be loaded."); }
+}
+async function loadTrials(q){
+  const url = `${CT}?format=json&countTotal=true&pageSize=40&sort=LastUpdatePostDate:desc&query.term=${encodeURIComponent(q)}`;
+  const d = await getJSON(url);
+  return {total:d.totalCount ?? null, studies:(d.studies||[]).map(mapStudy)};
+}
+async function loadPreprints(qEpmc){
+  const q = `(${qEpmc}) AND (SRC:PPR)`;
+  const url = `${EPMC}?query=${encodeURIComponent(q)}&format=json&pageSize=12&sort=${encodeURIComponent("P_PDATE_D desc")}`;
+  const d = await getJSON(url);
+  const items = (d.resultList?.result || []).map(mapPreprint);
+  return {total:Number(d.hitCount||items.length), items};
+}
+async function ctisSearch(phrase){
+  if(SNAP) return (SNAP.ctis && SNAP.ctis[phrase]) || [];
+  const body = {pagination:{page:1,size:100}, sort:{property:"decisionDate",direction:"DESC"}, searchCriteria:{containAll:phrase}};
+  const r = await fetch("/api/ctis/search", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)});
+  if(!r.ok) throw new Error("proxy "+r.status);
+  const d = await r.json();
+  return d.data || [];
+}
+async function fetchEuTrials(therapy, dxs){
+  const keys = therapy==="all" ? ["cart","bite","hsct"] : [therapy];
+  const seen = new Map();
+  for(const k of keys){
+    let data=[];
+    try{ data = await ctisSearch(CTIS_THERAPY[k].phrase); }catch(e){ data=[]; }
+    for(const t of data){
+      if(!t || !t.ctNumber || seen.has(t.ctNumber)) continue;
+      const text = [t.ctTitle,t.shortTitle,t.conditions,(t.therapeuticAreas||[]).join(" "),t.product].filter(Boolean).join("  ");
+      if(!CTIS_THERAPY[k].re.test(text)) continue;
+      const dxOk = isAllDx(dxs) ? AUTOIMMUNE_RE.test(text) : dxs.some(d=> DX_RE[d] && DX_RE[d].test(text));
+      if(!dxOk) continue;
+      seen.set(t.ctNumber, normalizeCtis(t));
+    }
+  }
+  return [...seen.values()];
+}
+async function detectProxy(){
+  if(SNAP){ state.proxy = !!SNAP.ctis; return; }
+  try{ const r = await fetch("/api/health", {cache:"no-store"}); const j = await r.json(); state.proxy = !!(j && j.ok); }
+  catch(e){ state.proxy = false; }
+}
+
+/* ---------- Cumulative chart (PubMed + curated congress/patient overlay) ---------- */
+/* Time axis = calendar quarters. Period key "YYYY-Qn"; period index = year*4 + (n-1). */
+const Q_MONTHS = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+function qKey(y,q){ return y+"-Q"+q; }
+function qIdx(k){ const m=String(k).match(/^(\d{4})-Q([1-4])$/); return m ? (+m[1])*4+(+m[2]-1) : NaN; }
+function qKeyOf(i){ return qKey(Math.floor(i/4), i%4+1); }
+function qLabel(i){ return "Q"+(i%4+1)+" "+Math.floor(i/4); }
+function nowQIdx(){ const d=new Date(); return d.getFullYear()*4+Math.floor(d.getMonth()/3); }
+function pubQKey(d){
+  const m=String(d||"").match(/(\d{4})(?:[\/\- ]+(\d{1,2}|[A-Za-z]{3}))?/); if(!m) return null;
+  let mo=1; if(m[2]) mo = /^\d+$/.test(m[2]) ? +m[2] : (Q_MONTHS.indexOf(m[2].toLowerCase())+1 || 1);
+  if(!(mo>=1 && mo<=12)) mo=1;
+  return qKey(m[1], Math.floor((mo-1)/3)+1);
+}
+function curatedQKey(e){
+  const y=+e.year, q=+e.quarter;
+  if(q===1||q===2||q===3||q===4) return qKey(y,q);
+  const now=nowQIdx();
+  return (y===Math.floor(now/4)) ? qKey(y, now%4+1) : qKey(y,4);
+}
+const CHART_MAX = 9000, PMID_QUARTER = new Map();
+let ncbiLast = 0;
+/* PubMed allows ~3 requests/second without an API key: space the chart's calls and retry once or twice. */
+async function ncbiJSON(url){
+  for(let attempt=0; ; attempt++){
+    const wait = 350 - (Date.now() - ncbiLast);
+    if(wait > 0) await new Promise(r=>setTimeout(r, wait));
+    ncbiLast = Date.now();
+    try{ return await getJSON(url); }
+    catch(e){ if(attempt >= 2) throw e; await new Promise(r=>setTimeout(r, 1200*(attempt+1))); }
+  }
+}
+async function pubYearCounts(query){
+  if(SNAP){
+    const c = SNAP.chart && SNAP.chart[query]; if(!c) throw new Error("not in snapshot");
+    return { total:c.total, capped:!!c.capped, fetched:c.fetched, years:{}, quarters:c.quarters||{}, ids:[] };
+  }
+  /* All matching records, paged 1000 at a time (PubMed serves at most CHART_MAX per search).
+     Publication quarter per PMID is cached, so the overlapping series cost one lookup each. */
+  let total=0; const ids=[];
+  for(let start=0; start<CHART_MAX; start+=1000){
+    const es = await ncbiJSON(`${EUT}esearch.fcgi?db=pubmed&retmode=json&retmax=1000&retstart=${start}&term=${encodeURIComponent(query)}`);
+    total = Number(es.esearchresult?.count || 0);
+    const page = es.esearchresult?.idlist || [];
+    page.forEach(id=>ids.push(id));
+    if(!page.length || ids.length>=total) break;
+  }
+  const need = ids.filter(id=>!PMID_QUARTER.has(id));
+  for(let i=0;i<need.length;i+=200){
+    const chunk = need.slice(i, i+200);
+    const sum = await ncbiJSON(`${EUT}esummary.fcgi?db=pubmed&retmode=json&id=${chunk.join(",")}`);
+    const res = sum.result || {};
+    (res.uids||[]).forEach(id=>{ const a=res[id]||{}; PMID_QUARTER.set(String(id), pubQKey(a.sortpubdate||a.pubdate)); });
+  }
+  const years = {}, quarters = {};
+  ids.forEach(id=>{ const k=PMID_QUARTER.get(String(id)); if(k){ quarters[k]=(quarters[k]||0)+1; const y=k.slice(0,4); years[y]=(years[y]||0)+1; } });
+  return { total, capped: ids.length<total, fetched: ids.length, years, quarters, ids };
+}
+function curatedEntries(){ return (window.RM_CURATED && Array.isArray(window.RM_CURATED.entries)) ? window.RM_CURATED.entries : null; }
+function curatedFor(metric){
+  const all = curatedEntries(); if(!all) return [];
+  const dxs = state.dxs, allDx = isAllDx(dxs);
+  return all.filter(e=> e && e.metric===metric && ["cart","bite","hsct"].includes(e.therapy)
+    && Number.isFinite(+e.year) && Number.isFinite(+e.count) && +e.count>0
+    && (allDx ? true : (e.diagnosis && dxs.includes(e.diagnosis))));
+}
+function curatedNote(){
+  const all = curatedEntries();
+  if(!all) return `Curated file not found — add <b>research-monitor-data.js</b> beside this page to include congress posters (ACR/EULAR/ASH/EHA/AAN/ECTRIMS) &amp; patient counts.`;
+  const rc = all.filter(e=>e&&e.metric==="reports").length, pc = all.filter(e=>e&&e.metric==="patients").length;
+  return `Curated data loaded: ${rc} report &amp; ${pc} patient entr${(rc+pc)===1?"y":"ies"} (◆ = curated point).`;
+}
+function niceMax(v){ if(v<=1) return 1; const p=Math.pow(10,Math.floor(Math.log10(v))); const f=v/p; const nf=f<=1?1:f<=2?2:f<=5?5:10; return nf*p; }
+function renderChartStatus(msg){ const a=$("#chartArea"); if(a) a.innerHTML=`<div class="chart-status">${esc(msg)}</div>`; }
+function updateChartHead(){
+  const sub=$("#chartSub"); if(sub) sub.textContent = " — " + (isAllDx(state.dxs) ? "all autoimmune disease" : dxSubtitle(state.dxs));
+  const btn=$("#chartBtn"); if(!btn) return;
+  const fresh = state.chart.pub && state.chart.dxKey===dxKey(state.dxs);
+  btn.textContent = state.chart.loading ? "Loading…" : (state.chart.pub ? (fresh ? "Refresh chart" : "Rebuild for this diagnosis") : "Build chart");
+  btn.disabled = state.chart.loading;
+}
+function setChartModeButtons(){ document.querySelectorAll("#chartModes .chart-mode").forEach(b=>b.classList.toggle("active", b.dataset.m===state.chart.mode)); }
+function setChartMode(m){ state.chart.mode=m; setChartModeButtons(); renderChart(); }
+function chartSeries(){
+  const t=state.chart.therapy||"all";
+  if(t==="all") return CHART_SERIES;
+  if(t==="cb") return CHART_SERIES.filter(s=> s.key==="cart" || s.key==="bite");
+  return CHART_SERIES.filter(s=>s.key===t);
+}
+function setChartTherapyButtons(){ document.querySelectorAll("#chartTherapies .chart-th").forEach(b=>b.classList.toggle("active", b.dataset.ct===(state.chart.therapy||"all"))); }
+function setChartTherapy(t){ state.chart.therapy=t; setChartTherapyButtons(); renderChart(); }
+async function loadChart(){
+  if(state.chart.loading) return;
+  state.chart.loading=true; updateChartHead();
+  try{
+    const out={};
+    for(const s of ["cart","bite","hsct","all"]){
+      renderChartStatus("Loading " + (s==="all" ? "de-duplicated total" : THERAPIES[s].label) + " from PubMed…");
+      out[s]=await pubYearCounts(buildQueries(s, state.dxs).pubmed);
+    }
+    state.chart.pub = { cart:out.cart, bite:out.bite, hsct:out.hsct, total:out.all };
+    state.chart.dxKey = dxKey(state.dxs);
+    if(state.chart.mode!=="reports"){ state.chart.mode="reports"; setChartModeButtons(); }
+    renderChart();
+  }catch(e){ renderChartStatus(SNAP ? SNAP_MISSING : "Couldn’t build the chart (network or PubMed rate limit). Wait a few seconds and try again."); }
+  state.chart.loading=false; updateChartHead();
+}
+function buildSeries(mode){
+  const inc={cart:{},bite:{},hsct:{},total:{}}, marks={cart:{},bite:{},hsct:{},total:{}};
+  if(mode==="reports" && state.chart.pub){
+    ["cart","bite","hsct","total"].forEach(k=>{ const y=state.chart.pub[k].quarters||{}; Object.keys(y).forEach(yr=> inc[k][yr]=(inc[k][yr]||0)+y[yr]); });
+  }
+  const totalIds = new Set((state.chart.pub && state.chart.pub.total && state.chart.pub.total.ids) || []);
+  const cur = curatedFor(mode==="patients" ? "patients" : "reports");
+  cur.forEach(e=>{
+    if(mode==="reports" && e.pmid && totalIds.has(String(e.pmid))) return;
+    const yr=curatedQKey(e), c=+e.count, lbl=e.label || (c+" "+(mode==="patients"?"patients":"reports"));
+    inc[e.therapy][yr]=(inc[e.therapy][yr]||0)+c; inc.total[yr]=(inc.total[yr]||0)+c;
+    (marks[e.therapy][yr]=marks[e.therapy][yr]||[]).push(lbl);
+    (marks.total[yr]=marks.total[yr]||[]).push(lbl);
+  });
+  return {inc, marks};
+}
+function renderChart(){
+  const host=$("#chartArea"); if(!host) return;
+  const mode=state.chart.mode;
+  if(mode==="reports" && !state.chart.pub){
+    host.innerHTML=`<div class="chart-ph">The <b>Publications + posters</b> view uses PubMed. Click <b>Build chart</b> to load it (cached per diagnosis).<div class="chart-cap">${curatedNote()}</div></div>`;
+    return;
+  }
+  const {inc, marks} = buildSeries(mode);
+  const series = chartSeries();
+  const nowQ=nowQIdx();
+  const yset=new Set(); series.forEach(s=> Object.keys(inc[s.key]).forEach(k=>{ const i=qIdx(k); if(Number.isFinite(i)) yset.add(i); }));
+  let ys=[...yset].filter(i=> i>=1985*4 && i<=nowQ);
+  if(!ys.length){
+    const msg = mode==="patients" ? 'No curated patient data for this selection. Add rows with metric:"patients" to research-monitor-data.js.' : "No publications found for this selection.";
+    host.innerHTML=`<div class="chart-ph">${msg}<div class="chart-cap">${curatedNote()}</div></div>`;
+    return;
+  }
+  ys.sort((a,b)=>a-b);
+  /* reports: every quarter up to now (PubMed is complete per quarter).
+     patients: curated points only, so the axis ends at the last curated quarter and
+     lines join the known points instead of implying "no new patients" in between. */
+  const sparse = mode==="patients";
+  const lastQ = sparse ? ys[ys.length-1] : nowQ;
+  const years=[]; for(let i=ys[0]; i<=lastQ; i++) years.push(i);
+  const cum={}, totals={};
+  series.forEach(s=>{ let c=0; cum[s.key]=years.map(i=>{ c+=(inc[s.key][qKeyOf(i)]||0); return c; }); totals[s.key]=c; });
+  const W=720, H=320, mL=46, mR=14, mT=12, mB=44, iw=W-mL-mR, ih=H-mT-mB, n=years.length;
+  let maxV=0; series.forEach(s=>{ if(state.chart.hidden[s.key]) return; cum[s.key].forEach(v=>{ if(v>maxV) maxV=v; }); });
+  const yMax=niceMax(Math.max(maxV,1));
+  const xAt=i=> mL + (n<=1?iw/2:iw*i/(n-1));
+  const yAt=v=> mT + ih - ih*(v/yMax);
+  let grid="", ylab="", xlab="";
+  for(let t=0;t<=4;t++){ const val=yMax*t/4, yy=yAt(val);
+    grid += `<line class="chart-grid" x1="${mL}" y1="${yy.toFixed(1)}" x2="${W-mR}" y2="${yy.toFixed(1)}"/>`;
+    ylab += `<text class="chart-tick" x="${mL-7}" y="${(yy+3).toFixed(1)}" text-anchor="end">${Math.round(val)}</text>`; }
+  /* x labels: few quarters -> "Q1" per quarter with the year underneath at each Q1 (and at the first point);
+     many quarters -> a tick per quarter (up to 15 years) and the year at Q1 of every k-th year. */
+  const base=mT+ih;
+  if(n<=16){
+    years.forEach((p,i)=>{ const x=xAt(i).toFixed(1);
+      xlab += `<line class="chart-axis" x1="${x}" y1="${base}" x2="${x}" y2="${base+4}"/><text class="chart-tick" x="${x}" y="${base+15}" text-anchor="middle">Q${p%4+1}</text>`;
+      if(p%4===0 || i===0) xlab += `<text class="chart-tick" x="${x}" y="${base+27}" text-anchor="middle" style="font-weight:700">${Math.floor(p/4)}</text>`; });
+  } else {
+    const nYears=Math.floor(years[n-1]/4)-Math.floor(years[0]/4)+1, yStep=Math.max(1, Math.ceil(nYears/10));
+    let lastX=-99;
+    years.forEach((p,i)=>{ const x=xAt(i), yr=Math.floor(p/4), isQ1=p%4===0;
+      if(n<=60 || isQ1) xlab += `<line class="chart-axis" x1="${x.toFixed(1)}" y1="${base}" x2="${x.toFixed(1)}" y2="${base+(isQ1?5:3)}"/>`;
+      if(isQ1 && yr%yStep===0 && x-lastX>=30){ xlab += `<text class="chart-tick" x="${x.toFixed(1)}" y="${base+16}" text-anchor="middle">${yr}</text>`; lastX=x; } });
+  }
+  const axes = `<line class="chart-axis" x1="${mL}" y1="${mT}" x2="${mL}" y2="${mT+ih}"/><line class="chart-axis" x1="${mL}" y1="${mT+ih}" x2="${W-mR}" y2="${mT+ih}"/>`;
+  const dotR = n>100 ? 1.5 : n>50 ? 1.9 : 2.4;
+  let lines="", dots="", diamonds="";
+  series.forEach(s=>{
+    if(state.chart.hidden[s.key]) return;
+    const show = cum[s.key].map((v,i)=> !sparse || !!inc[s.key][qKeyOf(years[i])]);
+    const pts = cum[s.key].map((v,i)=> show[i] ? xAt(i).toFixed(1)+","+yAt(v).toFixed(1) : null).filter(Boolean).join(" ");
+    if(pts) lines += `<polyline class="chart-line${s.wide?" wide":""}" style="stroke:${s.color}" points="${pts}"/>`;
+    cum[s.key].forEach((v,i)=>{
+      if(!show[i]) return;
+      const yr=qKeyOf(years[i]), ql=qLabel(years[i]), x=xAt(i), yy=yAt(v);
+      if(marks[s.key][yr]){
+        diamonds += `<path class="chart-mark" style="fill:${s.color}" d="M ${x.toFixed(1)} ${(yy-5).toFixed(1)} L ${(x+5).toFixed(1)} ${yy.toFixed(1)} L ${x.toFixed(1)} ${(yy+5).toFixed(1)} L ${(x-5).toFixed(1)} ${yy.toFixed(1)} Z"><title>${esc(ql+" · "+s.label+": "+v+"  (curated: "+marks[s.key][yr].join("; ")+")")}</title></path>`;
+      } else {
+        dots += `<circle class="chart-dot" style="fill:${s.color}" cx="${x.toFixed(1)}" cy="${yy.toFixed(1)}" r="${dotR}"><title>${ql} · ${esc(s.label)}: ${v}</title></circle>`;
+      }
+    });
+  });
+  const yTitle = `<text class="chart-axtitle" transform="translate(13,${mT+ih/2}) rotate(-90)" text-anchor="middle">Cumulative ${mode==="patients"?"patients":"reports"}</text>`;
+  const xTitle = `<text class="chart-axtitle" x="${mL+iw/2}" y="${H-4}" text-anchor="middle">Calendar quarter</text>`;
+  const svg = `<svg class="chart-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img">${grid}${axes}${lines}${dots}${diamonds}${ylab}${xlab}${yTitle}${xTitle}</svg>`;
+  const legend = `<div class="chart-legend">` + series.map(s=>
+    `<span class="chart-leg ${state.chart.hidden[s.key]?'off':''}" data-k="${s.key}"><span class="chart-sw" style="background:${s.color}"></span>${esc(s.label)} <span class="lv">${totals[s.key]}</span></span>`).join("") + `</div>`;
+  const capLines=[];
+  if(mode==="reports"){
+    capLines.push("Counts = PubMed publications (unique PMIDs) + curated congress reports, cumulative by calendar quarter (PubMed publication date) — reported activity, not patient numbers.");
+    const caps = chartSeries().filter(s=> state.chart.pub && state.chart.pub[s.key] && state.chart.pub[s.key].capped).map(s=>s.label);
+    if(caps.length) capLines.push("Very large sets are capped at the "+fmtCount(CHART_MAX)+" records PubMed serves per search: "+caps.join(", ")+" (may be under-counted).");
+  } else {
+    capLines.push("Patients treated — from the curated data file only (PubMed has no patient counts). Avoid double-counting overlapping cohorts when curating.");
+    capLines.push("Quarterly axis: a curated row without a quarter is placed in Q4 of its year (cumulative value correct at year-end); lines join the known points.");
+  }
+  capLines.push(curatedNote());
+  host.innerHTML = svg + legend + `<div class="chart-cap">`+capLines.join("<br>")+`</div>`;
+  host.querySelectorAll(".chart-leg").forEach(le=> le.onclick=()=>{ const k=le.dataset.k; state.chart.hidden[k]=!state.chart.hidden[k]; renderChart(); });
+}
+function chartOnDxChange(){
+  updateChartHead();
+  if(state.chart.mode==="patients"){ renderChart(); return; }
+  if(state.chart.pub && state.chart.dxKey!==dxKey(state.dxs)){
+    const a=$("#chartArea"); if(a) a.innerHTML=`<div class="chart-ph">Diagnosis changed. Click <b>Rebuild for this diagnosis</b> to refresh the publications chart.<div class="chart-cap">${curatedNote()}</div></div>`;
+  }
+}
+
+/* ---------- New-since-last-visit (EU trials excluded) ---------- */
+function markNew(key, pmv, trv, ppv){
+  const base = state.baseline[key];
+  const had = !!base;
+  const baseSet = new Set(had && base.ids ? base.ids : []);
+  const cur=[]; let np=0,nt=0,nr=0;
+  if(pmv){ pmv.items.forEach(p=>{ const id="P"+p.pmid; cur.push(id); p.isNew = had && !baseSet.has(id); if(p.isNew)np++; }); }
+  if(trv){ trv.studies.forEach(s=>{ if(s.source==="eu") return; const id="T"+s.nct; cur.push(id); s.isNew = had && !baseSet.has(id); if(s.isNew)nt++; }); }
+  if(ppv){ ppv.items.forEach(p=>{ const id="R"+(p.doi||p.id); cur.push(id); p.isNew = had && !baseSet.has(id); if(p.isNew)nr++; }); }
+  state.seen[key] = { ids:cur, ts:new Date().toISOString() };
+  try{ LS.setItem(SEEN_KEY, JSON.stringify(state.seen)); }catch(e){}
+  return { had, since: had ? base.ts : null, np, nt, nr, total: np+nt+nr };
+}
+function renderNewBanner(info){
+  const bar=$("#newbar"); if(!bar) return; bar.innerHTML="";
+  if(SNAP) return;
+  if(!info || !info.had){ bar.appendChild(el("div","newnote","First look at this combination — from now on, new papers, trials and preprints will be flagged here on each visit.")); return; }
+  if(info.total===0){ bar.appendChild(el("div","newnote","No new items since your last visit"+(info.since?" ("+fmtDate(info.since)+")":"")+".")); return; }
+  const pl=n=>n===1?"":"s";
+  bar.appendChild(el("div","newbanner",
+    `🟢 <b>${info.total} new</b> since your last visit${info.since?" ("+esc(fmtDate(info.since))+")":""} — `+
+    `${info.np} paper${pl(info.np)} · ${info.nt} trial${pl(info.nt)} · ${info.nr} preprint${pl(info.nr)}`));
+}
+
+/* ---------- Per-therapy-tab "new" counters ---------- */
+let tabCountsToken = 0;
+function setTabBadge(tk, n){
+  const btn = document.querySelector('#therapyTabs .tab[data-t="'+tk+'"]'); if(!btn) return;
+  let b = btn.querySelector(".tabcount");
+  if(n==null || n<=0){ if(b) b.remove(); return; }
+  if(!b){ b = el("span","tabcount"); btn.appendChild(b); }
+  b.textContent = n>99 ? "99+" : String(n); b.title = n+" new since your last visit";
+}
+function clearTabBadges(){ THERAPY_ORDER.forEach(tk=>setTabBadge(tk,null)); }
+function countFromCache(key){
+  const c = state.cache[key]; if(!c) return null;
+  let n=0;
+  ((c.papers&&c.papers.items)||[]).forEach(p=>{ if(p.isNew) n++; });
+  ((c.trials&&c.trials.studies)||[]).forEach(s=>{ if(s.isNew) n++; });
+  ((c.preprints&&c.preprints.items)||[]).forEach(p=>{ if(p.isNew) n++; });
+  return n;
+}
+async function countLive(tk, dxs){
+  const base = state.baseline[tk+"|"+dxKey(dxs)];
+  if(!base) return null;
+  const baseSet = new Set(base.ids||[]);
+  const q = buildQueries(tk, dxs);
+  const [pmIds, trRes, ppRes] = await Promise.all([
+    esearchIds(q.pubmed).catch(()=>[]),
+    loadTrials(q.ctgov).catch(()=>({studies:[]})),
+    loadPreprints(q.europepmc).catch(()=>({items:[]}))
+  ]);
+  let n=0;
+  pmIds.forEach(id=>{ if(!baseSet.has("P"+id)) n++; });
+  (trRes.studies||[]).forEach(s=>{ if(!baseSet.has("T"+s.nct)) n++; });
+  (ppRes.items||[]).forEach(p=>{ if(!baseSet.has("R"+(p.doi||p.id))) n++; });
+  return n;
+}
+async function refreshTabCounts(){
+  const my = ++tabCountsToken;
+  const dxs = state.dxs, dk = dxKey(dxs);
+  for(const tk of THERAPY_ORDER){
+    if(my !== tabCountsToken) return;
+    let n = countFromCache(tk+"|"+dk);
+    if(n === null){ try{ n = await countLive(tk, dxs); }catch(e){ n = null; } }
+    if(my !== tabCountsToken) return;
+    setTabBadge(tk, n);
+  }
+}
+
+/* ---------- Card builders ---------- */
+function paperCard(p){
+  const card = el("div","card");
+  if(p.isNew) card.classList.add("isnew");
+  const link = p.doi ? `https://doi.org/${p.doi}` : `https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/`;
+  card.appendChild(el("div","t",`<a href="${esc(link)}" target="_blank" rel="noopener">${esc(p.title)}</a>`));
+  card.appendChild(el("div","meta",
+    `<span><b>${esc(p.journal||"—")}</b></span>` + (p.date?`<span>${esc(p.date)}</span>`:"") + (p.authors?`<span>${esc(p.authors)}</span>`:"")));
+  const badges = el("div","badges");
+  if(p.isNew) badges.appendChild(el("span","badge b-new","New"));
+  if(p.isReview) badges.appendChild(el("span","badge b-review","Review"));
+  if(p.isTrial) badges.appendChild(el("span","badge b-trial","Clinical trial"));
+  if(p.doi) badges.appendChild(el("span","badge b-active","DOI"));
+  if(badges.childNodes.length) card.appendChild(badges);
+  const absBtn = el("button","abstoggle","Show abstract ▾"), absBox = el("div","abs");
+  absBtn.onclick = async ()=>{
+    if(!absBox.classList.contains("show")){
+      if(!(p.pmid in state.abstracts)){ absBox.textContent="Loading…"; absBox.classList.add("show"); await loadAbstracts([p.pmid]); }
+      absBox.textContent = state.abstracts[p.pmid] || "No abstract available."; absBox.classList.add("show"); absBtn.textContent="Hide abstract ▴";
+    } else { absBox.classList.remove("show"); absBtn.textContent="Show abstract ▾"; }
+  };
+  card.appendChild(absBtn); card.appendChild(absBox);
+  card._paper=p; card._absBtn=absBtn; card._absBox=absBox;
+  return card;
+}
+function trialCard(s){
+  const isEu = s.source==="eu";
+  const card = el("div","card");
+  if(s.isNew) card.classList.add("isnew");
+  if(isEu) card.classList.add("iseu");
+  const link = isEu ? ctisViewLink(s.euId) : `https://clinicaltrials.gov/study/${esc(s.nct)}`;
+  card.appendChild(el("div","t",`<a href="${esc(link)}" target="_blank" rel="noopener">${esc(s.title)}</a>`));
+  card.appendChild(el("div","meta",
+    `<span><b>${esc(s.sponsor||"—")}</b></span>` + (s.enroll!=null?`<span>${fmtCount(s.enroll)} enrolled</span>`:"") +
+    (isEu ? (s.countries.length?`<span>${esc(s.countries.slice(0,3).join(", "))}${s.countries.length>3?"…":""}</span>`:"")
+          : (s.sites?`<span>${s.sites} site${s.sites>1?"s":""}${s.countries.length?" · "+esc(s.countries.slice(0,2).join(", "))+(s.countries.length>2?"…":""):""}</span>`:"")) +
+    (s.updated?`<span>upd. ${esc(s.updated)}</span>`:"")));
+  const badges = el("div","badges");
+  if(s.isNew) badges.appendChild(el("span","badge b-new","New"));
+  const cls = s.active ? (/RECRUIT|ONGOING/i.test(s.status)?"b-recruit":"b-active") : "b-closed";
+  badges.appendChild(el("span","badge "+cls, esc(statusLabel(s.status))));
+  if(s.phase) badges.appendChild(el("span","badge b-phase", esc(s.phase)));
+  if(isEu){
+    badges.appendChild(el("span","badge b-eu","EU · CTIS"));
+    badges.appendChild(el("span","badge b-trial", esc(s.euId)));
+  } else {
+    badges.appendChild(el("span","badge b-trial", esc(s.nct)));
+    if(s.euId){
+      const a = el("a","badge b-eu","EU · EMA");
+      a.href = euEntryLink(s.euId); a.target="_blank"; a.rel="noopener";
+      a.title = "Also registered in the EU register (EMA): "+s.euId;
+      badges.appendChild(a);
+    }
+  }
+  card.appendChild(badges);
+  return card;
+}
+function preprintCard(p){
+  const card = el("div","card");
+  if(p.isNew) card.classList.add("isnew");
+  const link = p.doi ? `https://doi.org/${p.doi}` : `https://europepmc.org/article/${esc(p.source)}/${esc(p.id)}`;
+  card.appendChild(el("div","t",`<a href="${esc(link)}" target="_blank" rel="noopener">${esc(p.title)}</a>`));
+  card.appendChild(el("div","meta",
+    `<span><b>${esc(p.server||"Preprint")}</b></span>` + (p.date?`<span>${esc(p.date)}</span>`:"") +
+    (p.authors?`<span>${esc(p.authors.length>90?p.authors.slice(0,90)+"…":p.authors)}</span>`:"")));
+  const badges=el("div","badges");
+  if(p.isNew) badges.appendChild(el("span","badge b-new","New"));
+  badges.appendChild(el("span","badge b-pre","Preprint"));
+  card.appendChild(badges);
+  return card;
+}
+
+/* ---------- Renderers ---------- */
+function skeletons(node,n){ node.innerHTML=""; for(let i=0;i<n;i++) node.appendChild(el("div","skel")); }
+function renderPapers(node, data){
+  node.innerHTML="";
+  if(!data || !data.items.length){ node.appendChild(el("div","empty","No recent papers found for this combination.")); return; }
+  data.items.forEach(p=> node.appendChild(paperCard(p)));
+  if(state.showAbs) expandAllAbstracts(node);
+}
+async function expandAllAbstracts(node){
+  const cards=[...node.querySelectorAll(".card")].filter(c=>c._paper);
+  await loadAbstracts(cards.map(c=>c._paper.pmid));
+  cards.forEach(c=>{ c._absBox.textContent=state.abstracts[c._paper.pmid]||"No abstract available."; c._absBox.classList.add("show"); c._absBtn.textContent="Hide abstract ▴"; });
+}
+function renderTrials(node, data){
+  node.innerHTML="";
+  let list = data.studies;
+  if(!state.inclClosed) list = list.filter(s=>s.active);
+  list = list.slice(0,14);
+  if(!list.length){ node.appendChild(el("div","empty", state.inclClosed?"No trials found for this combination.":"No active trials — tick “Include completed / closed trials” to see all.")); return; }
+  list.forEach(s=> node.appendChild(trialCard(s)));
+}
+function renderPreprints(node, data){
+  node.innerHTML="";
+  if(!data || !data.items.length){ node.appendChild(el("div","empty","No matching preprints right now. Use the search link above to browse medRxiv / bioRxiv directly.")); return; }
+  data.items.forEach(p=> node.appendChild(preprintCard(p)));
+}
+function renderCounts(c){
+  const node=$("#counts"); node.innerHTML="";
+  const make=(n,l,cat)=>{
+    const d=el("div","count clickable");
+    d.appendChild(el("div","n",n)); d.appendChild(el("div","l",l)); d.appendChild(el("div","expand","View all ↗"));
+    d.setAttribute("role","button"); d.tabIndex=0;
+    d.onclick=()=>openModal(cat);
+    d.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openModal(cat); } };
+    return d;
+  };
+  node.appendChild(make(fmtCount(c.pubTotal), "PubMed matches", "pubmed"));
+  node.appendChild(make(fmtCount(c.trialTotal), "Registered trials", "trials"));
+  node.appendChild(make(fmtCount(c.activeShown), "Active trials shown", "trials-active"));
+  node.appendChild(make(fmtCount(c.preTotal), "Preprints (Europe PMC)", "preprints"));
+}
+function updateEuLinks(){
+  const node=$("#euLinks"); if(!node) return;
+  const term = `${THERAPIES[state.therapy].kw} ${dxKeywords(state.dxs)}`.trim();
+  let statusLine;
+  if(state.proxy){
+    const st = state.euStats;
+    statusLine = st
+      ? `<span class="eu-live">● EU merge on</span> (${SNAP?"CTIS, from snapshot":"CTIS via local helper"}): +${st.added} EU-only trial${st.added===1?"":"s"} merged${st.dups?`, ${st.dups} duplicate${st.dups===1?"":"s"} removed`:""}. EU trials show <span class="badge b-eu">EU · CTIS</span>.`
+      : `<span class="eu-live">● EU merge on</span> (CTIS via local helper).`;
+  } else {
+    statusLine = `Live EU merge is <b>off</b> — run the helper (Start-Research-Monitor.bat) to merge CTIS trials. ClinicalTrials.gov trials also in the EU register are tagged <span class="badge b-eu">EU · EMA</span>.`;
+  }
+  node.innerHTML =
+    `<span class="eu-tag">EU registers (EMA):</span> `+
+    `<a href="${esc(euctrLink(term))}" target="_blank" rel="noopener">EUCTR search ↗</a> · `+
+    `<a href="${esc(ctisSearchLink())}" target="_blank" rel="noopener">CTIS search ↗</a>`+
+    `<div class="eu-fine">${statusLine}</div>`;
+  const src=$("#trialsSrc"); if(src) src.textContent = state.proxy ? "ClinicalTrials.gov + EU CTIS" : "ClinicalTrials.gov";
+}
+
+/* ---------- Modal ---------- */
+const MODAL = { cat:null, q:null, items:[], studies:[], total:null, retstart:0, ctToken:null, cursor:null, hasMore:false, loading:false, error:false, activeOnly:false };
+function openModal(cat){
+  const links = externalLinks();
+  const q = buildQueries(state.therapy, state.dxs);
+  Object.assign(MODAL, { cat, items:[], studies:[], total:null, retstart:0, ctToken:null, cursor:null, hasMore:false, loading:false, error:false, activeOnly:(cat==="trials-active") });
+  let title, ext;
+  if(cat==="pubmed"){ title="PubMed matches"; ext=links.pubmed; MODAL.q=q.pubmed; }
+  else if(cat==="trials"){ title="Registered trials — all statuses"; ext=links.ctgov; MODAL.q=q.ctgov; }
+  else if(cat==="trials-active"){ title="Active clinical trials"; ext=links.ctgov; MODAL.q=q.ctgov; }
+  else { title="Preprints (Europe PMC)"; ext=links.preprint; MODAL.q=q.europepmc; }
+  $("#modal-title").textContent = title;
+  let sub = esc(THERAPIES[state.therapy].label) + " · " + esc(isAllDx(state.dxs) ? "all autoimmune disease" : dxSubtitle(state.dxs));
+  if(cat==="trials" || cat==="trials-active"){
+    const term = `${THERAPIES[state.therapy].kw} ${dxKeywords(state.dxs)}`.trim();
+    sub += ` · this list is ClinicalTrials.gov; EU trials appear in the main panel · <a href="${esc(euctrLink(term))}" target="_blank" rel="noopener">EUCTR ↗</a> <a href="${esc(ctisSearchLink())}" target="_blank" rel="noopener">CTIS ↗</a>`;
+  }
+  $("#modal-sub").innerHTML = sub;
+  $("#modal-ext").href = ext; $("#modal-ext").style.display="";
+  $("#modal-body").innerHTML=""; $("#modal-foot").innerHTML="";
+  $("#modal").hidden=false; document.body.style.overflow="hidden";
+  loadModalPage();
+}
+function closeModal(){ $("#modal").hidden=true; document.body.style.overflow=""; MODAL.cat=null; }
+const GLOSSARY = `<div class="gloss">
+<h4>Therapies</h4>
+<dl>
+<dt>CAR-T <span class="full">· Chimeric Antigen Receptor T-cell therapy</span></dt>
+<dd>Autologous (patient) or allogeneic (donor) T cells — or NK cells (CAR-NK) — engineered to target a B-cell antigen such as CD19 or BCMA, giving deep B-cell depletion / "immune reset".</dd>
+<dt>BiTE <span class="full">· Bispecific T-cell Engager</span></dt>
+<dd>A small antibody construct linking CD3 on a T cell to a target antigen (e.g. CD19) to redirect T-cell killing — e.g. blinatumomab.</dd>
+<dt>TCE <span class="full">· T-cell Engager</span></dt>
+<dd>Umbrella term for bispecific antibodies that engage T cells against a target; includes BiTEs and other formats (CD19×CD3, BCMA×CD3 such as teclistamab).</dd>
+<dt>Autologous HSCT <span class="full">· Autologous Haematopoietic Stem-Cell Transplantation</span></dt>
+<dd>Immunoablative conditioning followed by reinfusion of the patient's own stem cells to reset the immune system.</dd>
+</dl>
+<h4>Diagnoses</h4>
+<dl>
+<dt>SLE <span class="full">· Systemic Lupus Erythematosus</span></dt><dd>Multisystem autoimmune disease; includes lupus nephritis.</dd>
+<dt>RA <span class="full">· Rheumatoid Arthritis</span></dt><dd>Chronic inflammatory autoimmune arthritis.</dd>
+<dt>AAV <span class="full">· ANCA-Associated Vasculitis</span></dt><dd>Small-vessel vasculitis: granulomatosis with polyangiitis (GPA), microscopic polyangiitis (MPA), eosinophilic GPA (EGPA).</dd>
+<dt>SjD <span class="full">· Sjögren's Disease</span></dt><dd>Primary Sjögren's (sicca syndrome) — autoimmune exocrinopathy.</dd>
+<dt>IIM <span class="full">· Idiopathic Inflammatory Myopathy (myositis)</span></dt><dd>Dermatomyositis, polymyositis and immune-mediated necrotizing myopathy.</dd>
+<dt>ASyS <span class="full">· Antisynthetase Syndrome</span></dt><dd>Myositis with anti-aminoacyl-tRNA-synthetase antibodies (e.g. anti-Jo-1), interstitial lung disease, arthritis, mechanic's hands.</dd>
+<dt>Anti-MDA5 <span class="full">· Anti-MDA5 dermatomyositis</span></dt><dd>Dermatomyositis with antibodies to melanoma differentiation-associated gene 5; often amyopathic with rapidly progressive interstitial lung disease.</dd>
+<dt>SSc <span class="full">· Systemic Sclerosis (scleroderma)</span></dt><dd>Autoimmune fibrosing connective-tissue disease.</dd>
+<dt>MCTD <span class="full">· Mixed Connective Tissue Disease</span></dt><dd>Overlap of SLE, SSc and myositis with anti-U1-RNP antibodies (Sharp syndrome).</dd>
+<dt>MS <span class="full">· Multiple Sclerosis</span></dt><dd>Autoimmune demyelinating disease of the central nervous system.</dd>
+<dt>CIDP <span class="full">· Chronic Inflammatory Demyelinating Polyneuropathy</span></dt><dd>Autoimmune demyelinating disease of the peripheral nerves.</dd>
+</dl></div>`;
+function openGlossary(){
+  $("#modal-title").textContent="Abbreviations";
+  $("#modal-sub").textContent="Therapies and diagnoses used in this dashboard";
+  var ext=$("#modal-ext"); if(ext) ext.style.display="none";
+  $("#modal-body").innerHTML=GLOSSARY; $("#modal-foot").innerHTML=""; MODAL.cat=null;
+  $("#modal").hidden=false; document.body.style.overflow="hidden";
+}
+async function loadModalPage(){
+  if(MODAL.loading) return;
+  MODAL.loading=true; MODAL.error=false; renderModalFoot();
+  try{
+    if(MODAL.cat==="pubmed"){
+      const es = await getJSON(`${EUT}esearch.fcgi?db=pubmed&retmode=json&sort=date&retmax=50&retstart=${MODAL.retstart}&term=${encodeURIComponent(MODAL.q)}`);
+      MODAL.total = Number(es.esearchresult?.count || 0);
+      const ids = es.esearchresult?.idlist || [];
+      MODAL.items = MODAL.items.concat(await pmSummaries(ids));
+      MODAL.retstart += ids.length;
+      MODAL.hasMore = ids.length>0 && MODAL.retstart < MODAL.total;
+    } else if(MODAL.cat==="preprints"){
+      const url = `${EPMC}?query=${encodeURIComponent("("+MODAL.q+") AND (SRC:PPR)")}&format=json&pageSize=50&sort=${encodeURIComponent("P_PDATE_D desc")}&cursorMark=${encodeURIComponent(MODAL.cursor||"*")}`;
+      const d = await getJSON(url);
+      MODAL.total = Number(d.hitCount || 0);
+      const items = (d.resultList?.result || []).map(mapPreprint);
+      MODAL.items = MODAL.items.concat(items);
+      const nc = d.nextCursorMark;
+      MODAL.hasMore = !!nc && nc!==MODAL.cursor && items.length>0;
+      MODAL.cursor = nc;
+    } else {
+      let url = `${CT}?format=json&countTotal=true&pageSize=50&sort=LastUpdatePostDate:desc&query.term=${encodeURIComponent(MODAL.q)}`;
+      if(MODAL.ctToken) url += `&pageToken=${encodeURIComponent(MODAL.ctToken)}`;
+      const d = await getJSON(url);
+      MODAL.total = d.totalCount ?? null;
+      MODAL.studies = MODAL.studies.concat((d.studies||[]).map(mapStudy));
+      MODAL.ctToken = d.nextPageToken || null;
+      MODAL.hasMore = !!MODAL.ctToken;
+    }
+  }catch(e){ MODAL.error=true; }
+  MODAL.loading=false;
+  renderModalBody(); renderModalFoot();
+}
+function renderModalBody(){
+  const body=$("#modal-body");
+  if(MODAL.cat==="pubmed"){
+    if(!MODAL.items.length){ body.innerHTML=""; body.appendChild(modalEmpty()); return; }
+    body.innerHTML=""; MODAL.items.forEach(p=> body.appendChild(paperCard(p)));
+    if(state.showAbs) expandAllAbstracts(body);
+  } else if(MODAL.cat==="preprints"){
+    if(!MODAL.items.length){ body.innerHTML=""; body.appendChild(modalEmpty()); return; }
+    body.innerHTML=""; MODAL.items.forEach(p=> body.appendChild(preprintCard(p)));
+  } else {
+    let list = MODAL.activeOnly ? MODAL.studies.filter(s=>s.active) : MODAL.studies;
+    body.innerHTML="";
+    if(!list.length){ body.appendChild(modalEmpty()); return; }
+    list.forEach(s=> body.appendChild(trialCard(s)));
+  }
+}
+function modalEmpty(){
+  if(MODAL.error && SNAP) return el("div","err",`Full lists are not stored in this snapshot. Use the <a href="${esc($("#modal-ext").href)}" target="_blank" rel="noopener">full external search ↗</a>.`);
+  if(MODAL.error) return el("div","err",`Couldn’t load from the source. Try the <a href="${esc($("#modal-ext").href)}" target="_blank" rel="noopener">full external search ↗</a>.`);
+  return el("div","empty", MODAL.loading ? "Loading…" : "No results found for this combination.");
+}
+function renderModalFoot(){
+  const foot=$("#modal-foot"); foot.innerHTML="";
+  let shown;
+  if(MODAL.cat==="pubmed"||MODAL.cat==="preprints") shown=MODAL.items.length;
+  else shown=(MODAL.activeOnly?MODAL.studies.filter(s=>s.active).length:MODAL.studies.length);
+  const info=el("div","modal-info");
+  if(MODAL.loading && shown===0) info.textContent="Loading…";
+  else if(MODAL.activeOnly) info.textContent=`Showing ${shown} active trial${shown===1?"":"s"} loaded`+(MODAL.total!=null?` (of ${fmtCount(MODAL.total)} registered, all statuses)`:"");
+  else info.textContent=`Showing ${fmtCount(shown)}${MODAL.total!=null?" of "+fmtCount(MODAL.total):""}`;
+  foot.appendChild(info);
+  if(MODAL.hasMore){
+    const btn=el("button","btn", MODAL.loading?"Loading…":"Load more");
+    btn.disabled=MODAL.loading; btn.onclick=()=>loadModalPage();
+    foot.appendChild(btn);
+  }
+}
+
+/* ---------- Orchestration ---------- */
+function externalLinks(){
+  const q = buildQueries(state.therapy, state.dxs);
+  const extra = `${THERAPIES[state.therapy].kw} ${dxKeywords(state.dxs)}`;
+  return {
+    pubmed:`https://pubmed.ncbi.nlm.nih.gov/?term=${encodeURIComponent(q.pubmed)}&sort=date`,
+    ctgov:`https://clinicaltrials.gov/search?term=${encodeURIComponent(q.ctgov)}`,
+    preprint:`https://www.medrxiv.org/search/${encodeURIComponent(extra)}`
+  };
+}
+function setUpdated(){ if(SNAP){ $("#updated").textContent = "Snapshot " + (SNAP.date||""); return; } $("#updated").textContent = "Updated " + new Date().toLocaleString([], {dateStyle:"medium", timeStyle:"short"}); }
+function errBox(name, link){
+  if(SNAP) return el("div","err", esc(SNAP_MISSING)+` <a href="${esc(link)}" target="_blank" rel="noopener">Open ${esc(name)} search ↗</a>`);
+  return el("div","err",`Couldn’t reach ${esc(name)} from your browser (network or cross-origin block). `+
+    `<a href="${esc(link)}" target="_blank" rel="noopener">Open ${esc(name)} search ↗</a> · try ↻ Refresh.`);
+}
+async function loadView(force){
+  const token = ++state.loadToken;
+  const t = THERAPIES[state.therapy];
+  $("#tabsub").innerHTML = `<b>${esc(t.label)}</b> ${isAllDx(state.dxs)?"across":"in"} <b>${esc(dxSubtitle(state.dxs))}</b>`;
+  updateChartHead();
+  const papersN=$("#papers"), trialsN=$("#trials"), preN=$("#preprints");
+  const key = viewKey();
+
+  if(state.cache[key] && !force){
+    const c=state.cache[key]; state.euStats = c.euStats || null; updateEuLinks();
+    renderNewBanner(c.newInfo); renderCounts(c.counts); renderPapers(papersN,c.papers); renderTrials(trialsN,c.trials); renderPreprints(preN,c.preprints);
+    setTabBadge(state.therapy, countFromCache(key));
+    return;
+  }
+  updateEuLinks();
+  skeletons(papersN,4); skeletons(trialsN,4); skeletons(preN,3);
+  $("#newbar").innerHTML="";
+  renderCounts({pubTotal:null,trialTotal:null,activeShown:null,preTotal:null});
+
+  const q = buildQueries(state.therapy, state.dxs);
+  const euP = state.proxy ? fetchEuTrials(state.therapy, state.dxs).catch(()=>[]) : Promise.resolve([]);
+  const [results, euTrials] = await Promise.all([
+    Promise.allSettled([loadPubMed(q.pubmed), loadTrials(q.ctgov), loadPreprints(q.europepmc)]),
+    euP
+  ]);
+  if(token !== state.loadToken) return;
+  const [pm, tr, pp] = results, links = externalLinks();
+
+  let euStats = null;
+  if(tr.status==="fulfilled"){
+    if(euTrials && euTrials.length){
+      const ct = tr.value.studies;
+      const nums = new Set(), titles = new Set();
+      ct.forEach(s=>{ const b=eu3(s.euId); if(b) nums.add(b); titles.add(normTitle(s.title)); });
+      const euOnly = euTrials.filter(e=>{
+        const b = eu3(e.euId);
+        if(b && nums.has(b)) return false;
+        if(titles.has(normTitle(e.title))) return false;
+        return true;
+      });
+      tr.value.studies = ct.concat(euOnly).sort((a,b)=>(b.ts||0)-(a.ts||0));
+      euStats = { added:euOnly.length, dups:euTrials.length-euOnly.length, total:euTrials.length };
+    } else if(state.proxy){ euStats = { added:0, dups:0, total:0 }; }
+  }
+  state.euStats = euStats; updateEuLinks();
+
+  const info = markNew(key, pm.status==="fulfilled"?pm.value:null, tr.status==="fulfilled"?tr.value:null, pp.status==="fulfilled"?pp.value:null);
+  renderNewBanner(info);
+
+  if(pm.status==="fulfilled") renderPapers(papersN, pm.value); else { papersN.innerHTML=""; papersN.appendChild(errBox("PubMed", links.pubmed)); }
+  if(tr.status==="fulfilled") renderTrials(trialsN, tr.value); else { trialsN.innerHTML=""; trialsN.appendChild(errBox("ClinicalTrials.gov", links.ctgov)); }
+  if(pp.status==="fulfilled") renderPreprints(preN, pp.value); else { preN.innerHTML=""; preN.appendChild(errBox("Europe PMC", links.preprint)); }
+
+  const counts = {
+    pubTotal: pm.status==="fulfilled"?pm.value.total:null,
+    trialTotal: tr.status==="fulfilled"?tr.value.total:null,
+    activeShown: tr.status==="fulfilled"?tr.value.studies.filter(s=>s.active).length:null,
+    preTotal: pp.status==="fulfilled"?pp.value.total:null
+  };
+  renderCounts(counts);
+  state.cache[key] = {
+    counts, newInfo:info, euStats,
+    papers: pm.status==="fulfilled"?pm.value:{items:[]},
+    trials: tr.status==="fulfilled"?tr.value:{studies:[]},
+    preprints: pp.status==="fulfilled"?pp.value:{items:[]}
+  };
+  setUpdated();
+  setTabBadge(state.therapy, countFromCache(key));
+}
+
+/* ---------- Wire up ---------- */
+function toggleDx(k){
+  let cur = state.dxs.slice();
+  if(k==="all"){ cur = ["all"]; }
+  else {
+    cur = cur.filter(x=>x!=="all");
+    const i = cur.indexOf(k);
+    if(i>=0) cur.splice(i,1); else cur.push(k);
+    if(!cur.length) cur = ["all"];
+  }
+  state.dxs = cur;
+  LS.setItem("rm_dxs", cur.join(","));
+}
+function paintSelectors(){
+  document.querySelectorAll("#therapyTabs .tab").forEach(b=>b.classList.toggle("active", b.dataset.t===state.therapy));
+  document.querySelectorAll("#dxChips .chip").forEach(b=>b.classList.toggle("active", state.dxs.includes(b.dataset.d)));
+}
+document.querySelectorAll("#therapyTabs .tab").forEach(b=> b.onclick=()=>{
+  state.therapy=b.dataset.t; LS.setItem("rm_therapy",state.therapy); paintSelectors(); loadView(false);
+});
+document.querySelectorAll("#dxChips .chip").forEach(b=> b.onclick=()=>{
+  toggleDx(b.dataset.d); paintSelectors(); clearTabBadges(); chartOnDxChange(); loadView(false).then(refreshTabCounts);
+});
+document.querySelectorAll("#chartModes .chart-mode").forEach(b=> b.onclick=()=> setChartMode(b.dataset.m));
+document.querySelectorAll("#chartTherapies .chart-th").forEach(b=> b.onclick=()=> setChartTherapy(b.dataset.ct));
+document.querySelectorAll("[data-open]").forEach(b=>{ b.onclick=()=>{ const l=externalLinks(); const a=document.createElement("a"); a.href=l[b.dataset.open]; a.target="_blank"; a.rel="noopener"; a.style.display="none"; document.body.appendChild(a); a.click(); a.remove(); }; });
+$("#refreshAll").onclick=()=>{ state.cache={}; clearTabBadges(); loadView(true).then(refreshTabCounts); };
+$("#chartBtn").onclick=()=>loadChart();
+$("#glossaryBtn").onclick=openGlossary;
+$("#modal-close").onclick=closeModal;
+$("#modal").onclick=e=>{ if(e.target===$("#modal")) closeModal(); };
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !$("#modal").hidden) closeModal(); });
+$("#optAbs").checked = state.showAbs; $("#optClosed").checked = state.inclClosed;
+$("#optAbs").onchange=e=>{
+  state.showAbs=e.target.checked; LS.setItem("rm_abs", state.showAbs?"1":"0");
+  if(state.showAbs){ expandAllAbstracts($("#papers")); if(!$("#modal").hidden && MODAL.cat==="pubmed") expandAllAbstracts($("#modal-body")); }
+  else document.querySelectorAll(".abs").forEach(a=>{a.classList.remove("show"); const b=a.previousElementSibling; if(b&&b.classList.contains("abstoggle"))b.textContent="Show abstract ▾";});
+};
+$("#optClosed").onchange=e=>{
+  state.inclClosed=e.target.checked; LS.setItem("rm_closed", state.inclClosed?"1":"0");
+  const c=state.cache[viewKey()]; if(c) renderTrials($("#trials"), c.trials);
+};
+
+/* ---------- Boot ---------- */
+(async function boot(){
+  if(SNAP){
+    const rb=$("#refreshAll"); if(rb) rb.style.display="none";
+    const sub=document.querySelector("header .sub");
+    if(sub) sub.innerHTML = "Cell &amp; immunotherapy in autoimmune disease \u2014 <b>snapshot of "+esc(SNAP.date||"")+"</b> (not live) from PubMed, ClinicalTrials.gov, Europe PMC &amp; EU CTIS";
+    const cb=$("#chartBtn"); if(cb) cb.title="Loads from the snapshot";
+    if(SNAP.abstracts) Object.assign(state.abstracts, SNAP.abstracts);
+  }
+  paintSelectors();
+  setChartModeButtons();
+  setChartTherapyButtons();
+  updateChartHead();
+  await detectProxy();
+  await loadView(false);
+  refreshTabCounts();
+  if(SNAP) loadChart();
+})();
+</script>
+</body>
+</html>
