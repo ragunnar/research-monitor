@@ -143,6 +143,14 @@
   .b-rct{background:var(--good-soft); color:var(--good)}
   .b-case{background:var(--warn-soft); color:var(--warn)}
   .b-cohort{background:var(--pre-soft); color:var(--pre)}
+  .b-research{background:var(--closed-soft); color:var(--ink)}
+  .b-edit{background:var(--eu-soft); color:var(--eu)}
+  .b-letter{background:var(--closed-soft); color:var(--closed)}
+  .b-opinion{background:var(--eu-soft); color:var(--eu)}
+  .b-human{background:transparent; color:var(--good); box-shadow:0 0 0 1.3px var(--good) inset}
+  .b-animal{background:transparent; color:var(--pre); box-shadow:0 0 0 1.3px var(--pre) inset}
+  .b-vivo{background:transparent; color:var(--trial); box-shadow:0 0 0 1.3px var(--trial) inset}
+  .b-vitro{background:transparent; color:var(--review); box-shadow:0 0 0 1.3px var(--review) inset}
   .b-letter{background:var(--closed-soft); color:var(--closed)}
   .b-safety{background:var(--bad-soft); color:var(--bad)}
   .b-halt{background:var(--bad); color:#fff}
@@ -239,6 +247,7 @@
         <button class="chip cat-rheum" data-d="mctd">MCTD</button>
         <button class="chip cat-neuro" data-d="ms">MS</button>
         <button class="chip cat-neuro" data-d="cidp">CIDP</button>
+        <button class="chip cat-neuro" data-d="neuro" title="Other autoimmune neurological diseases (not MS, not CIDP)">Other neuro</button>
       </div>
       <span class="selhint">pick one or more &nbsp;·&nbsp; <span style="color:var(--accent)">●</span> rheumatologic &nbsp;·&nbsp; <span style="color:var(--good)">●</span> neurologic</span>
     </div>
@@ -468,6 +477,8 @@ const DIAGNOSES = {
               q:'("mixed connective tissue disease" OR MCTD OR "Sharp syndrome")' },
   ms:       { label:"MS", short:"multiple sclerosis (MS)",
               q:'("multiple sclerosis" OR "relapsing remitting multiple sclerosis" OR "progressive multiple sclerosis")' },
+  neuro:    { label:"Other neuro", short:"other autoimmune neurological disease (not MS or CIDP)",
+              q:'("myasthenia gravis" OR "neuromyelitis optica" OR NMOSD OR MOGAD OR "MOG antibody-associated disease" OR "stiff person syndrome" OR "stiff-person syndrome" OR "autoimmune encephalitis" OR "NMDA receptor encephalitis" OR "Lambert-Eaton" OR "autoimmune nodopathy" OR "multifocal motor neuropathy" OR "autoimmune neuropathy" OR "Guillain-Barre" OR "autoimmune neurological" OR "autoimmune neurologic" OR neuroimmunolog*)' },
   cidp:     { label:"CIDP", short:"chronic inflammatory demyelinating polyneuropathy (CIDP)",
               q:'("chronic inflammatory demyelinating polyneuropathy" OR CIDP OR "chronic inflammatory demyelinating polyradiculoneuropathy")' }
 };
@@ -488,7 +499,7 @@ const DX_RE = {
   myositis:/myositis|myopath|dermatomyositis|polymyositis/i,
   antisyn:/antisynthetase|anti-synthetase|anti[- ]?jo|jo-1|asys/i, mda5:/mda-?5/i,
   ssc:/systemic sclerosis|scleroderma/i, mctd:/mixed connective|\bMCTD\b|sharp syndrome/i,
-  ms:/multiple sclerosis/i, cidp:/cidp|demyelinating polyneuropath|polyradiculoneuropath/i
+  ms:/multiple sclerosis/i, neuro:/myasthenia|neuromyelitis|NMOSD|MOGAD|MOG antibody|stiff.person|encephalitis|lambert.eaton|nodopathy|motor neuropathy|guillain|neuroimmun/i, cidp:/cidp|demyelinating polyneuropath|polyradiculoneuropath/i
 };
 const AUTOIMMUNE_RE = /lupus|\bSLE\b|rheumatoid|sj[öo]gren|sicca|myositis|myopath|dermatomyositis|polymyositis|antisynthetase|mda-?5|systemic sclerosis|scleroderma|mixed connective|\bMCTD\b|multiple sclerosis|autoimmun|vasculit|anca|myasthenia|neuromyelitis|stiff.person|encephalitis|rheumatic/i;
 const CTIS_STATUS = {1:"Under evaluation",2:"Authorised",3:"Ongoing",4:"Suspended",5:"Ended",6:"Ended",7:"Revoked",8:"Withdrawn",9:"Not authorised"};
@@ -612,11 +623,63 @@ function paperKinds(types, title){
   else if(/\bsystematic review\b/i.test(t)) add("b-review","Systematic review",true);
   else if(/\bmeta-analysis\b/i.test(t)) add("b-review","Meta-analysis",true);
   else if(/\breview\b/i.test(t)) add("b-review","Review",true);
-  if(has(/^letter$/i) || has(/^comment$/i)) add("b-letter","Letter");
-  else if(/^(re:|reply\b|response to\b|correspondence\b|comment on\b|letter\b)|letter to the editor|\bin reply\b|: (a )?(reply|comment|correspondence)\b/i.test(t)) add("b-letter","Letter",true);
-  if(has(/^editorial$/i)) add("b-letter","Editorial");
   if(has(/^preprint$/i)) add("b-pre","Preprint");
+  /* Article type, shown first: editorial, letter, opinion / comment, or research article
+     (a plain "Journal Article" that is not a review, case report, editorial, letter, comment or preprint). */
+  const isRev = out.some(k=>k.cls==="b-review"), isCase = out.some(k=>k.cls==="b-case"), isPre = out.some(k=>k.cls==="b-pre");
+  const front = [], addF = (cls,label,fromTitle)=> front.push({cls, label, fromTitle:!!fromTitle});
+  if(has(/^editorial$/i)) addF("b-edit","Editorial");
+  else if(/\beditorial\b/i.test(t)) addF("b-edit","Editorial",true);
+  if(has(/^letter$/i)) addF("b-letter","Letter");
+  else if(/^(re:|reply\b|response to\b|correspondence\b|letter\b)|letter to the editor|\bin reply\b|: (a )?(reply|correspondence)\b/i.test(t)) addF("b-letter","Letter",true);
+  if(!front.length){
+    if(has(/^comment$/i)) addF("b-opinion","Opinion / comment");
+    else if(!isRev && /^comment on\b|: (a )?comment\b|\b(viewpoint|perspective|opinion|commentary|point of view)\b/i.test(t)) addF("b-opinion","Opinion / comment",true);
+  }
+  if(!front.length && !isRev && !isCase && !isPre && has(/^journal article$/i) && !has(/^(news|published erratum|retract|guideline|practice guideline|consensus)/i)) addF("b-research","Research article");
+  return front.concat(out);
+}
+/* Species and setting labels (animal experiment vs. study in humans; in vivo / in vitro). PubMed's summary
+   data has no such fields, so this is inferred from the study-type labels, the title and (when loaded) the
+   abstract. Reviews, editorials and opinion pieces get none. A paper can carry several. */
+const ANIMAL_TITLE_RE = /\b(mice|mouse|murine|rats?|rodents?|rabbits?|porcine|canine|non-?human primates?|macaques?|cynomolgus|rhesus|monkeys?|marmosets?|zebrafish|animal models?|animal stud(?:y|ies)|xenograft|experimental autoimmune encephalomyelitis|EAE|MRL\/lpr|NZB\/W|collagen-induced arthritis|pristane-induced|bleomycin-induced)\b/i;
+const ANIMAL_ABS_RE = /\b(mice|(?:mouse|murine|rat|animal|primate) models?|rats|non-?human primates?|macaques?|cynomolgus monkeys?|rhesus monkeys?|experimental autoimmune encephalomyelitis|MRL\/lpr|NZB\/W|collagen-induced arthritis)\b/i;
+const HUMAN_TITLE_RE = /\b(patients?|participants?|case report|a case of|case series|cohort|clinical trial|phase\s*(?:1|2|3|i{1,3})(?:\/(?:2|3|i{2,3}))?[ab]?|first-in-human|healthy volunteers?|year-old|women|men|children|adults?|real-world|registry)\b/i;
+const HUMAN_ABS_RE = /\b(patients?|participants?|healthy volunteers?|year-old|were enrolled|were treated|first-in-human)\b/i;
+const INVITRO_RE = /\b(in[\s-]vitro|co-?cultur\w*|cell lines?|organoids?|cytotoxicity assays?)\b/i;
+const INVIVO_RE = /\bin[\s-]vivo\b/i;
+/* "in vivo CAR-T" (CAR-T cells generated inside the patient) is a therapy, not a study setting: strip it first. */
+const INVIVO_THERAPY_RE = /\bin[\s-]vivo[\s-]+(?:generat\w+|engineer\w+|program\w+|reprogram\w+|produc\w+|induc\w+|deliver\w+|transduc\w+|manufactur\w+|edit\w+|gene\b|mRNA\b|LNP\b|CAR\b|CAR-?T\w*|chimeric|T[\s-]cell engineering)|\b(?:CAR[\s-]?T(?:[\s-]cells?)?|CARs?|engineering|generation|reprogramming) in[\s-]vivo\b/gi;
+function paperSubjects(p){
+  const t = String(p.title||"");
+  const abs = (p.pmid in state.abstracts) ? String(state.abstracts[p.pmid]||"") : "";
+  const kinds = p.kinds || paperKinds([], t);
+  if(kinds.some(k=>/^(b-review|b-edit|b-opinion)$/.test(k.cls))) return [];
+  const clinical = kinds.some(k=>/^(b-rct|b-trial|b-case|b-cohort)$/.test(k.cls));
+  const animal = ANIMAL_TITLE_RE.test(t) || ANIMAL_ABS_RE.test(abs);
+  const inVitro = INVITRO_RE.test(t) || (!clinical && INVITRO_RE.test(abs));
+  const human = clinical || HUMAN_TITLE_RE.test(t) || (!animal && !inVitro && HUMAN_ABS_RE.test(abs));
+  const inVivo = animal || (!human && INVIVO_RE.test((t+" "+abs).replace(INVIVO_THERAPY_RE," ")));
+  const out = [];
+  if(human) out.push({cls:"b-human", label:"Human study"});
+  if(animal) out.push({cls:"b-animal", label:"Animal study"});
+  if(inVivo) out.push({cls:"b-vivo", label:"In vivo"});
+  if(inVitro) out.push({cls:"b-vitro", label:"In vitro"});
   return out;
+}
+function paintSubjects(card){
+  const s = card && card._subj; if(!s || !card._paper) return;
+  s.innerHTML = "";
+  paperSubjects(card._paper).forEach(k=>{
+    const b = el("span","badge "+k.cls, esc(k.label));
+    b.title = "Inferred from study type, title and abstract (PubMed summaries carry no species or study-setting field)";
+    s.appendChild(b);
+  });
+}
+async function labelSubjects(node){
+  const cards=[...node.querySelectorAll(".card")].filter(c=>c._paper);
+  await loadAbstracts(cards.map(c=>c._paper.pmid));
+  cards.forEach(paintSubjects);
 }
 function euRegId(idModule){
   const cands=[];
@@ -656,14 +719,20 @@ async function pmSummaries(ids){
   const res = sum.result || {};
   return (res.uids||[]).map(id=>mapPaper(res[id]||{}, id));
 }
+const PAPERS_MAX = 50, PAPERS_SHOWN = 10;
 async function loadPubMed(q){
-  const es = await getJSON(`${EUT}esearch.fcgi?db=pubmed&retmode=json&sort=date&retmax=15&term=${encodeURIComponent(q)}`);
+  /* Up to PAPERS_MAX newest papers are loaded; the panel shows the first PAPERS_SHOWN with a "Show all" button.
+     A snapshot built before this change only stores the 15 newest per view: fall back to that list. */
+  const url = n => `${EUT}esearch.fcgi?db=pubmed&retmode=json&sort=date&retmax=${n}&term=${encodeURIComponent(q)}`;
+  let es;
+  try{ es = await getJSON(url(PAPERS_MAX)); }
+  catch(e){ if(!SNAP) throw e; es = await getJSON(url(15)); }
   const total = Number(es.esearchresult?.count || 0);
   const items = await pmSummaries(es.esearchresult?.idlist || []);
   return {total, items};
 }
 async function esearchIds(q){
-  const es = await getJSON(`${EUT}esearch.fcgi?db=pubmed&retmode=json&sort=date&retmax=15&term=${encodeURIComponent(q)}`);
+  const es = await getJSON(`${EUT}esearch.fcgi?db=pubmed&retmode=json&sort=date&retmax=${PAPERS_MAX}&term=${encodeURIComponent(q)}`);
   return es.esearchresult?.idlist || [];
 }
 async function loadAbstracts(pmids){
@@ -1062,17 +1131,18 @@ function paperCard(p){
     b.title = k.fromTitle ? "Inferred from the title (PubMed has not yet assigned a publication type)" : "PubMed publication type";
     badges.appendChild(b);
   });
+  const subj = el("span"); subj.style.display="contents"; badges.appendChild(subj);
   if(p.doi) badges.appendChild(el("span","badge b-active","DOI"));
   if(badges.childNodes.length) card.appendChild(badges);
   const absBtn = el("button","abstoggle","Show abstract ▾"), absBox = el("div","abs");
   absBtn.onclick = async ()=>{
     if(!absBox.classList.contains("show")){
-      if(!(p.pmid in state.abstracts)){ absBox.textContent="Loading…"; absBox.classList.add("show"); await loadAbstracts([p.pmid]); }
+      if(!(p.pmid in state.abstracts)){ absBox.textContent="Loading…"; absBox.classList.add("show"); await loadAbstracts([p.pmid]); paintSubjects(card); }
       absBox.textContent = state.abstracts[p.pmid] || "No abstract available."; absBox.classList.add("show"); absBtn.textContent="Hide abstract ▴";
     } else { absBox.classList.remove("show"); absBtn.textContent="Show abstract ▾"; }
   };
   card.appendChild(absBtn); card.appendChild(absBox);
-  card._paper=p; card._absBtn=absBtn; card._absBox=absBox;
+  card._paper=p; card._absBtn=absBtn; card._absBox=absBox; card._subj=subj; paintSubjects(card);
   return card;
 }
 function trialCard(s){
@@ -1127,13 +1197,18 @@ function skeletons(node,n){ node.innerHTML=""; for(let i=0;i<n;i++) node.appendC
 function renderPapers(node, data){
   node.innerHTML="";
   if(!data || !data.items.length){ node.appendChild(el("div","empty","No recent papers found for this combination.")); return; }
-  data.items.forEach(p=> node.appendChild(paperCard(p)));
-  if(state.showAbs) expandAllAbstracts(node);
+  (data.showAll ? data.items : data.items.slice(0, PAPERS_SHOWN)).forEach(p=> node.appendChild(paperCard(p)));
+  if(data.items.length > PAPERS_SHOWN){
+    const b = el("button","btn", data.showAll ? "Show first "+PAPERS_SHOWN : "Show all "+data.items.length+" recent papers");
+    b.onclick = ()=>{ data.showAll = !data.showAll; renderPapers(node, data); };
+    node.appendChild(b);
+  }
+  if(state.showAbs) expandAllAbstracts(node); else labelSubjects(node);
 }
 async function expandAllAbstracts(node){
   const cards=[...node.querySelectorAll(".card")].filter(c=>c._paper);
   await loadAbstracts(cards.map(c=>c._paper.pmid));
-  cards.forEach(c=>{ c._absBox.textContent=state.abstracts[c._paper.pmid]||"No abstract available."; c._absBox.classList.add("show"); c._absBtn.textContent="Hide abstract ▴"; });
+  cards.forEach(c=>{ c._absBox.textContent=state.abstracts[c._paper.pmid]||"No abstract available."; c._absBox.classList.add("show"); c._absBtn.textContent="Hide abstract ▴"; paintSubjects(c); });
 }
 function renderTrials(node, data){
   node.innerHTML="";
@@ -1232,6 +1307,7 @@ const GLOSSARY = `<div class="gloss">
 <dt>MCTD <span class="full">· Mixed Connective Tissue Disease</span></dt><dd>Overlap of SLE, SSc and myositis with anti-U1-RNP antibodies (Sharp syndrome).</dd>
 <dt>MS <span class="full">· Multiple Sclerosis</span></dt><dd>Autoimmune demyelinating disease of the central nervous system.</dd>
 <dt>CIDP <span class="full">· Chronic Inflammatory Demyelinating Polyneuropathy</span></dt><dd>Autoimmune demyelinating disease of the peripheral nerves.</dd>
+<dt>Other neuro <span class="full">· Other autoimmune neurological diseases (not MS, not CIDP)</span></dt><dd>Myasthenia gravis, NMOSD, MOGAD, stiff person syndrome, autoimmune encephalitis, Lambert-Eaton syndrome, autoimmune nodopathy, multifocal motor neuropathy and Guillain-Barré syndrome.</dd>
 </dl></div>`;
 function openGlossary(){
   $("#modal-title").textContent="Abbreviations";
@@ -1278,7 +1354,7 @@ function renderModalBody(){
   if(MODAL.cat==="pubmed"){
     if(!MODAL.items.length){ body.innerHTML=""; body.appendChild(modalEmpty()); return; }
     body.innerHTML=""; MODAL.items.forEach(p=> body.appendChild(paperCard(p)));
-    if(state.showAbs) expandAllAbstracts(body);
+    if(state.showAbs) expandAllAbstracts(body); else labelSubjects(body);
   } else if(MODAL.cat==="preprints"){
     if(!MODAL.items.length){ body.innerHTML=""; body.appendChild(modalEmpty()); return; }
     body.innerHTML=""; MODAL.items.forEach(p=> body.appendChild(preprintCard(p)));
