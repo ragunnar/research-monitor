@@ -5,7 +5,7 @@
    type("breakthrough"|"safety"|"halt"|"regulatory") - title - summary - source - url.
    Keep this file valid JavaScript: one JSON object per line inside items[]. */
 window.RM_NEWS = {
-  updated: "2026-11-23",
+  updated: "2026-11-26",
   items: [
     {"date": "2026-11-19", "therapy": "cart", "type": "safety", "title": "Novartis says it is working toward restarting its paused autoimmune CAR-T (rap-cel) trials", "summary": "At its investor update Novartis said it sees a path to lift the hold on rapcabtagene autoleucel, paused since August after three fatal IEC-HS cases.", "source": "Endpoints News", "url": "https://endpoints.news/novartis-details-eczema-win-autoimmune-car-t-efforts-after-rocky-quarter/"},
     {"date": "2026-11-12", "therapy": "cart", "type": "regulatory", "title": "Kyverna completes FDA application for miv-cel in stiff person syndrome", "summary": "Rolling BLA for the CD19 CAR-T mivocabtagene autoleucel is now fully submitted with a request for priority review; the company calls it the first BLA for a CAR-T in autoimmune disease.", "source": "Kyverna Therapeutics (Nasdaq: KYTX) press release", "url": "https://www.globenewswire.com/news-release/2026/11/12/3401507/0/en/kyverna-therapeutics-announces-completion-of-bla-submission-for-miv-cel-in-stiff-person-syndrome-and-reports-third-quarter-2026-financial-results.html"},
